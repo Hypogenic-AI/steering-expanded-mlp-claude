@@ -1,0 +1,227 @@
+[
+  {
+    "title": "Transcoders Find Interpretable LLM Feature Circuits",
+    "year": 2024,
+    "authors": "Jacob Dunefsky, Philippe Chlenski, Neel Nanda",
+    "url": "https://api.semanticscholar.org/CorpusId:270562552",
+    "relevance": 3,
+    "abstract": "A key goal in mechanistic interpretability is circuit analysis: finding sparse subgraphs of models corresponding to specific behaviors or capabilities. However, MLP sublayers make fine-grained circuit analysis on transformer-based language models difficult. In particular, interpretable features -- such as those found by sparse autoencoders (SAEs) -- are typically linear combinations of extremely many neurons, each with its own nonlinearity to account for. Circuit analysis in this setting thus either yields intractably large circuits or fails to disentangle local and global behavior. To address this we explore transcoders, which seek to faithfully approximate a densely activating MLP layer with a wider, sparsely-activating MLP layer. We introduce a novel method for using transcoders to perform weights-based circuit analysis through MLP sublayers. The resulting circuits neatly factorize into input-dependent and input-invariant terms. We then successfully train transcoders on language models with 120M, 410M, and 1.4B parameters, and find them to perform at least on par with SAEs in terms of sparsity, faithfulness, and human-interpretability. Finally, we apply transcoders to reverse-engineer unknown circuits in the model, and we obtain novel insights regarding the\"greater-than circuit\"in GPT2-small. Our results suggest that transcoders can prove effective in decomposing model computations involving MLPs into interpretable circuits. Code is available at https://github.com/jacobdunefsky/transcoder_circuits/.",
+    "citations": 109
+  },
+  {
+    "title": "Automatically Identifying Local and Global Circuits with Linear Computation Graphs",
+    "year": 2024,
+    "authors": "Xuyang Ge, Fukang Zhu, Wentao Shu, Junxuan Wang, Zhengfu He, Xipeng Qiu",
+    "url": "https://api.semanticscholar.org/CorpusId:269983119",
+    "relevance": 3,
+    "abstract": "Circuit analysis of any certain model behavior is a central task in mechanistic interpretability. We introduce our circuit discovery pipeline with Sparse Autoencoders (SAEs) and a variant called Transcoders. With these two modules inserted into the model, the model's computation graph with respect to OV and MLP circuits becomes strictly linear. Our methods do not require linear approximation to compute the causal effect of each node. This fine-grained graph identifies both end-to-end and local circuits accounting for either logits or intermediate features. We can scalably apply this pipeline with a technique called Hierarchical Attribution. We analyze three kinds of circuits in GPT-2 Small: bracket, induction, and Indirect Object Identification circuits. Our results reveal new findings underlying existing discoveries.",
+    "citations": 20
+  },
+  {
+    "title": "Partially Rewriting a Transformer in Natural Language",
+    "year": 2025,
+    "authors": "Gonccalo Paulo, Nora Belrose",
+    "url": "https://api.semanticscholar.org/CorpusId:276079991",
+    "relevance": 2,
+    "abstract": "The greatest ambition of mechanistic interpretability is to completely rewrite deep neural networks in a format that is more amenable to human understanding, while preserving their behavior and performance. In this paper, we attempt to partially rewrite a large language model using simple natural language explanations. We first approximate one of the feedforward networks in the LLM with a wider MLP with sparsely activating neurons - a transcoder - and use an automated interpretability pipeline to generate explanations for these neurons. We then replace the first layer of this sparse MLP with an LLM-based simulator, which predicts the activation of each neuron given its explanation and the surrounding context. Finally, we measure the degree to which these modifications distort the model's final output. With our pipeline, the model's increase in loss is statistically similar to entirely replacing the sparse MLP output with the zero vector. We employ the same protocol, this time using a sparse autoencoder, on the residual stream of the same layer and obtain similar results. These results suggest that more detailed explanations are needed to improve performance substantially above the zero ablation baseline.",
+    "citations": 1
+  },
+  {
+    "title": "Decomposing MLP Activations into Interpretable Features via Semi-Nonnegative Matrix Factorization",
+    "year": 2025,
+    "authors": "Or Shafran, Atticus Geiger, Mor Geva",
+    "url": "https://api.semanticscholar.org/CorpusId:279318478",
+    "relevance": 3,
+    "abstract": "A central goal for mechanistic interpretability has been to identify the right units of analysis in large language models (LLMs) that causally explain their outputs. While early work focused on individual neurons, evidence that neurons often encode multiple concepts has motivated a shift toward analyzing directions in activation space. A key question is how to find directions that capture interpretable features in an unsupervised manner. Current methods rely on dictionary learning with sparse autoencoders (SAEs), commonly trained over residual stream activations to learn directions from scratch. However, SAEs often struggle in causal evaluations and lack intrinsic interpretability, as their learning is not explicitly tied to the computations of the model. Here, we tackle these limitations by directly decomposing MLP activations with semi-nonnegative matrix factorization (SNMF), such that the learned features are (a) sparse linear combinations of co-activated neurons, and (b) mapped to their activating inputs, making them directly interpretable. Experiments on Llama 3.1, Gemma 2 and GPT-2 show that SNMF derived features outperform SAEs and a strong supervised baseline (difference-in-means) on causal steering, while aligning with human-interpretable concepts. Further analysis reveals that specific neuron combinations are reused across semantically-related features, exposing a hierarchical structure in the MLP's activation space. Together, these results position SNMF as a simple and effective tool for identifying interpretable features and dissecting concept representations in LLMs.",
+    "citations": 3
+  },
+  {
+    "title": "Interpreting Large Text-to-Image Diffusion Models with Dictionary Learning",
+    "year": 2025,
+    "authors": "Stepan Shabalin, Ayush Panda, Dmitrii Kharlapenko, Abdur Raheem Ali, Yixiong Hao, Arthur Conmy",
+    "url": "https://api.semanticscholar.org/CorpusId:279071062",
+    "relevance": 2,
+    "abstract": "Sparse autoencoders are a promising new approach for decomposing language model activations for interpretation and control. They have been applied successfully to vision transformer image encoders and to small-scale diffusion models. Inference-Time Decomposition of Activations (ITDA) is a recently proposed variant of dictionary learning that takes the dictionary to be a set of data points from the activation distribution and reconstructs them with gradient pursuit. We apply Sparse Autoencoders (SAEs) and ITDA to a large text-to-image diffusion model, Flux 1, and consider the interpretability of embeddings of both by introducing a visual automated interpretation pipeline. We find that SAEs accurately reconstruct residual stream embeddings and beat MLP neurons on interpretability. We are able to use SAE features to steer image generation through activation addition. We find that ITDA has comparable interpretability to SAEs.",
+    "citations": 3
+  },
+  {
+    "title": "Language Model Circuits Are Sparse in the Neuron Basis",
+    "year": 2026,
+    "authors": "Aryaman Arora, Zhengxuan Wu, Jacob Steinhardt, Sarah Schwettmann",
+    "url": "https://api.semanticscholar.org/CorpusId:285241493",
+    "relevance": 3,
+    "abstract": "The high-level concepts that a neural network uses to perform computation need not be aligned to individual neurons (Smolensky, 1986). Language model interpretability research has thus turned to techniques such as \\textit{sparse autoencoders} (SAEs) to decompose the neuron basis into more interpretable units of model computation, for tasks such as \\textit{circuit tracing}. However, not all neuron-based representations are uninterpretable. For the first time, we empirically show that \\textbf{MLP neurons are as sparse a feature basis as SAEs}. We use this finding to develop an end-to-end pipeline for circuit tracing on the MLP neuron basis, which locates causal circuitry on a variety of tasks using gradient-based attribution. On a standard subject-verb agreement benchmark (Marks et al., 2025), a circuit of $\\approx 10^2$ MLP neurons is enough to control model behaviour. On the multi-hop city $\\to$ state $\\to$ capital task from Lindsey et al., 2025, we find a circuit in which small sets of neurons encode specific latent reasoning steps (e.g.~`map city to its state'), and can be steered to change the model's output. This work thus advances automated interpretability of language models without additional training costs.",
+    "citations": 1
+  },
+  {
+    "title": "Small Vectors, Big Effects: A Mechanistic Study of RL-Induced Reasoning via Steering Vectors",
+    "year": 2025,
+    "authors": "Viacheslav Sinii, Nikita Balagansky, Yaroslav Aksenov, Vadim Kurochkin, Daniil Laptev, Gleb Gerasimov, Alexey Gorbatovski, Boris Shaposhnikov, Daniil Gavrilov",
+    "url": "https://api.semanticscholar.org/CorpusId:281203624",
+    "relevance": 3,
+    "abstract": "The mechanisms by which reasoning training reshapes LLMs'internal computations remain unclear. We study lightweight steering vectors inserted into the base model's residual stream and trained with a reinforcement-learning objective. These vectors explain a large portion of full fine-tuning performance increase while preserving the interpretability of small, additive interventions. We find that (i) the last-layer steering vector acts like a token-substitution bias concentrated on the first generated token, consistently boosting tokens such as\"To\"and\"Step\"; (ii) the penultimate-layer vector leaves attention patterns largely intact and instead operates through the MLP and unembedding, preferentially up-weighting process words and structure symbols; and (iii) the steering vectors transfer to other models from the same family. Taken together, these results deepen understanding of how trained steering vectors shape computation and should inform future work in activation engineering and the study of reasoning models.",
+    "citations": 2
+  },
+  {
+    "title": "Steering Conceptual Bias via Transformer Latent-Subspace Activation",
+    "year": 2025,
+    "authors": "Vansh Sharma, Venkat Raman",
+    "url": "https://api.semanticscholar.org/CorpusId:280000603",
+    "relevance": 3,
+    "abstract": "This work examines whether activating latent subspaces in language models (LLMs) can steer scientific code generation toward a specific programming language. Five causal LLMs were first evaluated on scientific coding prompts to quantify their baseline bias among four programming languages. A static neuron-attribution method, perturbing the highest activated MLP weight for a C++ or CPP token, proved brittle and exhibited limited generalization across prompt styles and model scales. To address these limitations, a gradient-refined adaptive activation steering framework (G-ACT) was developed: per-prompt activation differences are clustered into a small set of steering directions, and lightweight per-layer probes are trained and refined online to select the appropriate steering vector. In LLaMA-3.2 3B, this approach reliably biases generation towards the CPP language by increasing the average probe classification accuracy by 15% and the early layers (0-6) improving the probe classification accuracy by 61.5% compared to the standard ACT framework. For LLaMA-3.3 70B, where attention-head signals become more diffuse, targeted injections at key layers still improve language selection. Although per-layer probing introduces a modest inference overhead, it remains practical by steering only a subset of layers and enables reproducible model behavior. These results demonstrate a scalable, interpretable and efficient mechanism for concept-level control for practical agentic systems.",
+    "citations": 1
+  },
+  {
+    "title": "Steer2Edit: From Activation Steering to Component-Level Editing",
+    "year": 2026,
+    "authors": "Chung-En Sun, Ge Yan, Zimo Wang, Tsui-Wei Weng",
+    "url": "https://api.semanticscholar.org/CorpusId:285462537",
+    "relevance": 3,
+    "abstract": "Steering methods influence Large Language Model behavior by identifying semantic directions in hidden representations, but are typically realized through inference-time activation interventions that apply a fixed, global modification to the model's internal states. While effective, such interventions often induce unfavorable attribute-utility trade-offs under strong control, as they ignore the fact that many behaviors are governed by a small and heterogeneous subset of model components. We propose Steer2Edit, a theoretically grounded, training-free framework that transforms steering vectors from inference-time control signals into diagnostic signals for component-level rank-1 weight editing. Instead of uniformly injecting a steering direction during generation, Steer2Edit selectively redistributes behavioral influence across individual attention heads and MLP neurons, yielding interpretable edits that preserve the standard forward pass and remain compatible with optimized parallel inference. Across safety alignment, hallucination mitigation, and reasoning efficiency, Steer2Edit consistently achieves more favorable attribute-utility trade-offs: at matched downstream performance, it improves safety by up to 17.2%, increases truthfulness by 9.8%, and reduces reasoning length by 12.2% on average. Overall, Steer2Edit provides a principled bridge between representation steering and weight editing by translating steering signals into interpretable, training-free parameter updates. Our code is available at https://github.com/Trustworthy-ML-Lab/Steer2Edit",
+    "citations": 0
+  },
+  {
+    "title": "LatentGuard: Controllable Latent Steering for Robust Refusal of Attacks and Reliable Response Generation",
+    "year": 2025,
+    "authors": "Huizhen Shu, Xuying Li, Zhuo Li",
+    "url": "https://www.semanticscholar.org/paper/6188816faf2b6bdedd2fad64610ee89c162c1007",
+    "relevance": 3,
+    "abstract": "Achieving robust safety alignment in large language models (LLMs) while preserving their utility remains a fundamental challenge. Existing approaches often struggle to balance comprehensive safety with fine-grained controllability at the representation level. We introduce LATENTGUARD, a novel three-stage framework that combines behavioral alignment with supervised latent space control for interpretable and precise safety steering. Our approach begins by fine-tuning an LLM on rationalized datasets containing both reasoning-enhanced refusal responses to adversarial prompts and reasoning-enhanced normal responses to benign queries, establishing robust behavioral priors across both safety-critical and utility-preserving scenarios. We then train a structured variational autoencoder (VAE) on intermediate MLP activations, supervised by multi-label annotations including attack types, attack methods, and benign indicators. This supervision enables the VAE to learn disentangled latent representations that capture distinct adversarial characteristics while maintaining semantic interpretability. Through targeted manipulation of learned latent dimensions, LATENTGUARD achieves selective refusal behavior, effectively blocking harmful requests while preserving helpfulness for legitimate use cases. Experiments on Qwen3-8B demonstrate significant improvements in both safety controllability and response interpretability without compromising utility. Cross-architecture validation on Mistral-7B confirms the generalizability of our latent steering approach, showing consistent effectiveness across different model families. Our results suggest that structured representation-level intervention offers a promising pathway toward building safer yet practical LLM systems.",
+    "citations": 0
+  },
+  {
+    "title": "A Unified Theory of Sparse Dictionary Learning in Mechanistic Interpretability: Piecewise Biconvexity and Spurious Minima",
+    "year": 2025,
+    "authors": "Yiming Tang, Harshvardhan Saini, Zhaoqian Yao, Zheng Lin, Yizhen Liao, Qianxiao Li, Mengnan Du, Dianbo Liu",
+    "url": "https://api.semanticscholar.org/CorpusId:283672481",
+    "relevance": 2,
+    "abstract": "As AI models achieve remarkable capabilities across diverse domains, understanding what representations they learn and how they encode concepts has become increasingly important for both scientific progress and trustworthy deployment. Recent works in mechanistic interpretability have widely reported that neural networks represent meaningful concepts as linear directions in their representation spaces and often encode diverse concepts in superposition. Various sparse dictionary learning (SDL) methods, including sparse autoencoders, transcoders, and crosscoders, are utilized to address this by training auxiliary models with sparsity constraints to disentangle these superposed concepts into monosemantic features. These methods are the backbone of modern mechanistic interpretability, yet in practice they consistently produce polysemantic features, feature absorption, and dead neurons, with very limited theoretical understanding of why these phenomena occur. Existing theoretical work is limited to tied-weight sparse autoencoders, leaving the broader family of SDL methods without formal grounding. We develop the first unified theoretical framework that casts all major SDL variants as a single piecewise biconvex optimization problem, and characterize its global solution set, non-identifiability, and spurious optima. This analysis yields principled explanations for feature absorption and dead neurons. To expose these pathologies under full ground-truth access, we introduce the Linear Representation Bench. Guided by our theory, we propose feature anchoring, a novel technique that restores SDL identifiability, substantially improving feature recovery across synthetic benchmarks and real neural representations.",
+    "citations": 0
+  },
+  {
+    "title": "Interpreting Attention Layer Outputs with Sparse Autoencoders",
+    "year": 2024,
+    "authors": "Connor Kissane, Robert Krzyzanowski, Joseph Bloom, Arthur Conmy, Neel Nanda",
+    "url": "https://api.semanticscholar.org/CorpusId:270711110",
+    "relevance": 2,
+    "abstract": "Decomposing model activations into interpretable components is a key open problem in mechanistic interpretability. Sparse autoencoders (SAEs) are a popular method for decomposing the internal activations of trained transformers into sparse, interpretable features, and have been applied to MLP layers and the residual stream. In this work we train SAEs on attention layer outputs and show that also here SAEs find a sparse, interpretable decomposition. We demonstrate this on transformers from several model families and up to 2B parameters. We perform a qualitative study of the features computed by attention layers, and find multiple families: long-range context, short-range context and induction features. We qualitatively study the role of every head in GPT-2 Small, and estimate that at least 90% of the heads are polysemantic, i.e. have multiple unrelated roles. Further, we show that Sparse Autoencoders are a useful tool that enable researchers to explain model behavior in greater detail than prior work. For example, we explore the mystery of why models have so many seemingly redundant induction heads, use SAEs to motivate the hypothesis that some are long-prefix whereas others are short-prefix, and confirm this with more rigorous analysis. We use our SAEs to analyze the computation performed by the Indirect Object Identification circuit (Wang et al.), validating that the SAEs find causally meaningful intermediate variables, and deepening our understanding of the semantics of the circuit. We open-source the trained SAEs and a tool for exploring arbitrary prompts through the lens of Attention Output SAEs.",
+    "citations": 41
+  },
+  {
+    "title": "Spurious Rewards Paradox: Mechanistically Understanding How RLVR Activates Memorization Shortcuts in LLMs",
+    "year": 2026,
+    "authors": "Lecheng Yan, Ruizhe Li, Guanhua Chen, Qing Li, Jiahui Geng, Wenxi Li, Vincent Wang, Chris Lee",
+    "url": "https://api.semanticscholar.org/CorpusId:284860856",
+    "relevance": 3,
+    "abstract": "Reinforcement Learning with Verifiable Rewards (RLVR) is highly effective for enhancing LLM reasoning, yet recent evidence shows models like Qwen 2.5 achieve significant gains even with spurious or incorrect rewards. We investigate this phenomenon and identify a\"Perplexity Paradox\": spurious RLVR triggers a divergence where answer-token perplexity drops while prompt-side coherence degrades, suggesting the model is bypassing reasoning in favor of memorization. Using Path Patching, Logit Lens, JSD analysis, and Neural Differential Equations, we uncover a hidden Anchor-Adapter circuit that facilitates this shortcut. We localize a Functional Anchor in the middle layers (L18-20) that triggers the retrieval of memorized solutions, followed by Structural Adapters in later layers (L21+) that transform representations to accommodate the shortcut signal. Finally, we demonstrate that scaling specific MLP keys within this circuit allows for bidirectional causal steering-artificially amplifying or suppressing contamination-driven performance. Our results provide a mechanistic roadmap for identifying and mitigating data contamination in RLVR-tuned models. Code is available at https://github.com/idwts/How-RLVR-Activates-Memorization-Shortcuts.",
+    "citations": 1
+  },
+  {
+    "title": "Leveraging Sparse Autoencoders to Reveal Interpretable Features in Geophysical Models",
+    "year": 2025,
+    "authors": "Fraser King, C. Pettersen, D. Posselt, Sarah Ringerud, Yan Xie",
+    "url": "https://www.semanticscholar.org/paper/2d69b4fd36ad818fb14fa42de5cd1eb2712a0c6f",
+    "relevance": 2,
+    "abstract": "Machine learning is an increasingly popular tool in the geosciences, offering new approaches to numerical weather prediction and complex data set analysis. However, as reliance on these techniques grows, pressing questions about model transparency, internal biases, and trust emerge. Although post hoc explainability analyses can provide insights on how neural network (NN) outputs are generated, a robust framework for interpreting internal decision\u2010making remains underdeveloped. We address this challenge by exploring a framework to better understand the inner structure of NNs using sparse autoencoders (SAEs). With simplified multilayer perceptrons (MLPs), we demonstrate that hidden layer neurons often exhibit polysemantic behavior where each feature is mapped to a linear combination of neurons, creating an overcomplete representation. This phenomenon, known as superposition, arises when networks encode more features than available neurons, causing neurons to respond to multiple, seemingly unrelated inputs. By introducing a regularized SAE that learns from the original MLP's activations, we can disentangle these representations resulting in a 33% reduction in the average number of sensitive inputs per neuron. Applied to a precipitation classification model, this framework reveals evidence of monosemantic behavior in which neurons respond to a single meaningful concept tied to specific physical phenomena such as temperature and fall speed thresholds for precipitation phase partitioning. We observe similar monosemantic behavior in SAE activations from a snowfall rate regressor related to particle concentration intensity and vertical radar structures. This framework supports the development of more physically consistent interpretations of hidden neuron activations and improved trust in operational ML models across the geosciences.",
+    "citations": 1
+  },
+  {
+    "title": "Sparse Autoencoders Find Highly Interpretable Features in Language Models",
+    "year": 2023,
+    "authors": "Hoagy Cunningham, Aidan Ewart, L. Smith, R. Huben, Lee Sharkey",
+    "url": "https://api.semanticscholar.org/CorpusId:261934663",
+    "relevance": 3,
+    "abstract": "One of the roadblocks to a better understanding of neural networks' internals is \\textit{polysemanticity}, where neurons appear to activate in multiple, semantically distinct contexts. Polysemanticity prevents us from identifying concise, human-understandable explanations for what neural networks are doing internally. One hypothesised cause of polysemanticity is \\textit{superposition}, where neural networks represent more features than they have neurons by assigning features to an overcomplete set of directions in activation space, rather than to individual neurons. Here, we attempt to identify those directions, using sparse autoencoders to reconstruct the internal activations of a language model. These autoencoders learn sets of sparsely activating features that are more interpretable and monosemantic than directions identified by alternative approaches, where interpretability is measured by automated methods. Moreover, we show that with our learned set of features, we can pinpoint the features that are causally responsible for counterfactual behaviour on the indirect object identification task \\citep{wang2022interpretability} to a finer degree than previous decompositions. This work indicates that it is possible to resolve superposition in language models using a scalable, unsupervised method. Our method may serve as a foundation for future mechanistic interpretability work, which we hope will enable greater model transparency and steerability.",
+    "citations": 948
+  },
+  {
+    "title": "Mixture of Experts Made Intrinsically Interpretable",
+    "year": 2025,
+    "authors": "Xingyi Yang, Constantin Venhoff, Ashkan Khakzar, Christian Schr\u00f6der de Witt, P. Dokania, A. Bibi, Philip H. S. Torr",
+    "url": "https://api.semanticscholar.org/CorpusId:276928904",
+    "relevance": 2,
+    "abstract": "Neurons in large language models often exhibit \\emph{polysemanticity}, simultaneously encoding multiple unrelated concepts and obscuring interpretability. Instead of relying on post-hoc methods, we present \\textbf{MoE-X}, a Mixture-of-Experts (MoE) language model designed to be \\emph{intrinsically} interpretable. Our approach is motivated by the observation that, in language models, wider networks with sparse activations are more likely to capture interpretable factors. However, directly training such large sparse networks is computationally prohibitive. MoE architectures offer a scalable alternative by activating only a subset of experts for any given input, inherently aligning with interpretability objectives. In MoE-X, we establish this connection by rewriting the MoE layer as an equivalent sparse, large MLP. This approach enables efficient scaling of the hidden size while maintaining sparsity. To further enhance interpretability, we enforce sparse activation within each expert and redesign the routing mechanism to prioritize experts with the highest activation sparsity. These designs ensure that only the most salient features are routed and processed by the experts. We evaluate MoE-X on chess and natural language tasks, showing that it achieves performance comparable to dense models while significantly improving interpretability. MoE-X achieves a perplexity better than GPT-2, with interpretability surpassing even sparse autoencoder (SAE)-based approaches.",
+    "citations": 12
+  },
+  {
+    "title": "The Knowledge Microscope: Features as Better Analytical Lenses than Neurons",
+    "year": 2025,
+    "authors": "Yuheng Chen, Pengfei Cao, Kang Liu, Jun Zhao",
+    "url": "https://api.semanticscholar.org/CorpusId:276422171",
+    "relevance": 2,
+    "abstract": "Previous studies primarily utilize MLP neurons as units of analysis for understanding the mechanisms of factual knowledge in Language Models (LMs); however, neurons suffer from polysemanticity, leading to limited knowledge expression and poor interpretability. In this paper, we first conduct preliminary experiments to validate that Sparse Autoencoders (SAE) can effectively decompose neurons into features, which serve as alternative analytical units. With this established, our core findings reveal three key advantages of features over neurons: (1) Features exhibit stronger influence on knowledge expression and superior interpretability. (2) Features demonstrate enhanced monosemanticity, showing distinct activation patterns between related and unrelated facts. (3) Features achieve better privacy protection than neurons, demonstrated through our proposed FeatureEdit method, which significantly outperforms existing neuron-based approaches in erasing privacy-sensitive information from LMs.Code and dataset will be available.",
+    "citations": 4
+  },
+  {
+    "title": "Mechanistic Interpretability for Large Language Model Alignment: Progress, Challenges, and Future Directions",
+    "year": 2026,
+    "authors": "Usman Naseem",
+    "url": "https://api.semanticscholar.org/CorpusId:285540847",
+    "relevance": 2,
+    "abstract": "Large language models (LLMs) have achieved remarkable capabilities across diverse tasks, yet their internal decision-making processes remain largely opaque. Mechanistic interpretability (i.e., the systematic study of how neural networks implement algorithms through their learned representations and computational structures) has emerged as a critical research direction for understanding and aligning these models. This paper surveys recent progress in mechanistic interpretability techniques applied to LLM alignment, examining methods ranging from circuit discovery to feature visualization, activation steering, and causal intervention. We analyze how interpretability insights have informed alignment strategies including reinforcement learning from human feedback (RLHF), constitutional AI, and scalable oversight. Key challenges are identified, including the superposition hypothesis, polysemanticity of neurons, and the difficulty of interpreting emergent behaviors in large-scale models. We propose future research directions focusing on automated interpretability, cross-model generalization of circuits, and the development of interpretability-driven alignment techniques that can scale to frontier models.",
+    "citations": 1
+  },
+  {
+    "title": "Rank-1 LoRAs Encode Interpretable Reasoning Signals",
+    "year": 2025,
+    "authors": "Jake Ward, P. Riechers, Adam Shai",
+    "url": "https://www.semanticscholar.org/paper/b27b8373ea63fe7c0bc39c35f5925b366833a154",
+    "relevance": 2,
+    "abstract": "Reasoning models leverage inference-time compute to significantly enhance the performance of language models on difficult logical tasks, and have become a dominating paradigm in frontier LLMs. Despite their wide adoption, the mechanisms underpinning the enhanced performance of these reasoning models are not well understood. In this work, we show that the majority of new capabilities in reasoning models can be elicited by small, single-rank changes to base model parameters, with many of these changes being interpretable. Specifically, we use a rank-1 LoRA to create a minimal parameter adapter for Qwen-2.5-32B-Instruct which recovers 73-90% of reasoning-benchmark performance compared to a full parameter finetune. We find that the activations of this LoRA are as interpretable as MLP neurons, and fire for reasoning-specific behaviors. Finally, we train a sparse autoencoder on the entire activation state of this LoRA and identify fine-grained and monosemantic features. Our findings highlight that reasoning performance can arise largely from minimal changes to base model parameters, and explore what these changes affect. More broadly, our work shows that parameter-efficient training methods can be used as a targeted lens for uncovering fundamental insights about language model behavior and dynamics.",
+    "citations": 1
+  },
+  {
+    "title": "FADE: Why Bad Descriptions Happen to Good Features",
+    "year": 2025,
+    "authors": "Bruno Puri, Aakriti Jain, Elena Golimblevskaia, Patrick Kahardipraja, Thomas Wiegand, Wojciech Samek, S. Lapuschkin",
+    "url": "https://api.semanticscholar.org/CorpusId:276574664",
+    "relevance": 2,
+    "abstract": "Recent advances in mechanistic interpretability have highlighted the potential of automating interpretability pipelines in analyzing the latent representations within LLMs. While this may enhance our understanding of internal mechanisms, the field lacks standardized evaluation methods for assessing the validity of discovered features. We attempt to bridge this gap by introducing FADE: Feature Alignment to Description Evaluation, a scalable model-agnostic framework for automatically evaluating feature-to-description alignment. FADE evaluates alignment across four key metrics - Clarity, Responsiveness, Purity, and Faithfulness - and systematically quantifies the causes of the misalignment between features and their descriptions. We apply FADE to analyze existing open-source feature descriptions and assess key components of automated interpretability pipelines, aiming to enhance the quality of descriptions. Our findings highlight fundamental challenges in generating feature descriptions, particularly for SAEs compared to MLP neurons, providing insights into the limitations and future directions of automated interpretability. We release FADE as an open-source package at: https://github.com/brunibrun/FADE",
+    "citations": 6
+  },
+  {
+    "title": "Superscopes: Amplifying Internal Feature Representations for Language Model Interpretation",
+    "year": 2025,
+    "authors": "Jonathan Jacobi, Gal Niv",
+    "url": "https://api.semanticscholar.org/CorpusId:276774646",
+    "relevance": 2,
+    "abstract": "Understanding and interpreting the internal representations of large language models (LLMs) remains an open challenge. Patchscopes introduced a method for probing internal activations by patching them into new prompts, prompting models to self-explain their hidden representations. We introduce Superscopes, a technique that systematically amplifies superposed features in MLP outputs (multilayer perceptron) and hidden states before patching them into new contexts. Inspired by the\"features as directions\"perspective and the Classifier-Free Guidance (CFG) approach from diffusion models, Superscopes amplifies weak but meaningful features, enabling the interpretation of internal representations that previous methods failed to explain-all without requiring additional training. This approach provides new insights into how LLMs build context and represent complex concepts, further advancing mechanistic interpretability.",
+    "citations": 3
+  },
+  {
+    "title": "Do VLMs Have Bad Eyes? Diagnosing Compositional Failures via Mechanistic Interpretability",
+    "year": 2025,
+    "authors": "Ashwath Vaithinathan Aravindan, Abha Jha, Mihir Kulkarni",
+    "url": "https://api.semanticscholar.org/CorpusId:280711446",
+    "relevance": 2,
+    "abstract": "Vision-Language Models (VLMs) have shown remarkable performance in integrating visual and textual information for tasks such as image captioning and visual question answering. However, these models struggle with compositional generalization and object binding, which limit their ability to handle novel combinations of objects and their attributes. Our work explores the root causes of these failures using mechanistic interpretability techniques. We show evidence that individual neurons in the MLP layers of CLIP's vision encoder represent multiple features, and this \u201csuper-position\u201d directly hinders its compositional feature representation which consequently affects compositional reasoning and object binding capabilities. We hope this study will serve as an initial step toward uncovering the mechanistic roots of compositional failures in VLMs. The code and supporting results can be found here.",
+    "citations": 2
+  },
+  {
+    "title": "InterPLM: Discovering Interpretable Features in Protein Language Models via Sparse Autoencoders",
+    "year": 2024,
+    "authors": "Elana Simon, James Y. Zou",
+    "url": "https://www.semanticscholar.org/paper/3eaa875b9b9ca4554320ae005e9cf323f3b705b0",
+    "relevance": 2,
+    "abstract": "Protein language models (PLMs) have demonstrated remarkable success in protein modeling and design, yet their internal mechanisms for predicting structure and function remain poorly understood. Here we present a systematic approach to extract and analyze interpretable features from PLMs using sparse autoencoders (SAEs). By training SAEs on embeddings from the PLM ESM-2, we identify thousands of human-interpretable latent features per layer that highlight hundreds of known biological concepts such as binding sites, structural motifs, and functional domains. In contrast, examining individual neurons in ESM-2 reveals significantly less conceptual alignment, suggesting that PLMs represent most concepts in superposition. We further demonstrate that a larger PLM (ESM-2 with 650M parameters) captures substantially more interpretable concepts than a smaller PLM (ESM-2 with 8M parameters). Beyond capturing known annotations, we show that ESM-2 learns coherent concepts that do not map onto existing annotations and propose a pipeline using language models to automatically interpret novel latent features learned by the SAEs. As practical applications, we demonstrate how these latent features can fill in missing annotations in protein databases and enable targeted steering of protein sequence generation. Our results demonstrate that PLMs encode rich, interpretable representations of protein biology and we propose a systematic framework to uncover and understand these latent features. In the process, we recover both known biology and potentially new protein motifs. As community resources, we introduce InterPLM (interPLM.ai), an interactive visualization platform for investigating learned PLM features, and release code for training and analysis at github.com/ElanaPearl/interPLM.",
+    "citations": 79
+  },
+  {
+    "title": "Jacobian Sparse Autoencoders: Sparsify Computations, Not Just Activations",
+    "year": 2025,
+    "authors": "Lucy Farnik, Tim Lawson, Conor Houghton, Laurence Aitchison",
+    "url": "https://www.semanticscholar.org/paper/56ef7975633e552baa82cb3f11ceee96805cfe1a",
+    "relevance": 2,
+    "abstract": "Sparse autoencoders (SAEs) have been successfully used to discover sparse and human-interpretable representations of the latent activations of LLMs. However, we would ultimately like to understand the computations performed by LLMs and not just their representations. The extent to which SAEs can help us understand computations is unclear because they are not designed to\"sparsify\"computations in any sense, only latent activations. To solve this, we propose Jacobian SAEs (JSAEs), which yield not only sparsity in the input and output activations of a given model component but also sparsity in the computation (formally, the Jacobian) connecting them. With a na\\\"ive implementation, the Jacobians in LLMs would be computationally intractable due to their size. One key technical contribution is thus finding an efficient way of computing Jacobians in this setup. We find that JSAEs extract a relatively large degree of computational sparsity while preserving downstream LLM performance approximately as well as traditional SAEs. We also show that Jacobians are a reasonable proxy for computational sparsity because MLPs are approximately linear when rewritten in the JSAE basis. Lastly, we show that JSAEs achieve a greater degree of computational sparsity on pre-trained LLMs than on the equivalent randomized LLM. This shows that the sparsity of the computational graph appears to be a property that LLMs learn through training, and suggests that JSAEs might be more suitable for understanding learned transformer computations than standard SAEs.",
+    "citations": 6
+  },
+  {
+    "title": "Mechanistic Interpretability of Antibody Language Models Using SAEs",
+    "year": 2025,
+    "authors": "Rebonto Haque, Oliver M. Turnbull, Anisha Parsan, Nithin Parsan, John J. Yang, Charlotte M. Deane",
+    "url": "https://api.semanticscholar.org/CorpusId:283671976",
+    "relevance": 2,
+    "abstract": "Sparse autoencoders (SAEs) are a mechanistic interpretability technique that have been used to provide insight into learned concepts within large protein language models. Here, we employ TopK and Ordered SAEs to investigate an autoregressive antibody language model, p-IgGen, and steer its generation. We show that TopK SAEs can reveal biologically meaningful latent features, but high feature concept correlation does not guarantee causal control over generation. In contrast, Ordered SAEs impose an hierarchical structure that reliably identifies steerable features, but at the expense of more complex and less interpretable activation patterns. These findings advance the mechanistic interpretability of domain-specific protein language models and suggest that, while TopK SAEs are sufficient for mapping latent features to concepts, Ordered SAEs are preferable when precise generative steering is required.",
+    "citations": 1
+  }
+]

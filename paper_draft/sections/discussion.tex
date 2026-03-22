@@ -1,0 +1,44 @@
+\section{Discussion}
+\label{sec:discussion}
+
+\subsection{Why Is the MLP Space Harder to Steer?}
+
+Our results paint a consistent picture: the MLP intermediate space is not ``more linear''---it is more \emph{specialized}. Each MLP neuron acts as a feature detector for specific patterns, as evidenced by the high kurtosis of activations (9.5 vs.\ 5.4 in the residual stream) and the extreme concentration of the steering vector (2.8\% of neurons carrying 50\% of the signal). When we compute a mean-difference steering vector, the result is a sparse direction that primarily activates a handful of specific neurons. Pushing these neurons produces the desired sentiment shift at moderate strengths, but because the neurons are so specialized, strong interventions quickly drive the model out of distribution.
+
+The residual stream, by contrast, integrates information from all upstream attention heads and MLP sublayers. A single direction in this space corresponds to a broader, more distributed concept representation that degrades more gracefully under perturbation. The 0.474 cosine similarity between residual and MLP-derived steering vectors confirms that the residual stream captures information beyond just the MLP's contribution---attention heads also encode sentiment-relevant features that the MLP vector misses.
+
+\subsection{Sparsity Is a Double-Edged Sword}
+
+The sparsity of MLP steering vectors is both a strength and a weakness. On the positive side, the concentration means we can identify a small set of ``sentiment neurons'' (86 of 3072) that carry most of the steering signal. This could enable more targeted interventions---for example, clamping specific neurons rather than adding a full 3072-dimensional vector. On the negative side, this concentration makes mean-difference steering fragile. A vector that relies on 86 neurons is more sensitive to the magnitude of each component than one that distributes its signal across 330 dimensions.
+
+This connects to the finding of \citet{shafran2025decomposing} that SNMF-derived MLP features outperform direct mean-difference vectors at steering. Their approach identifies \emph{groups} of co-activated neurons that jointly encode a concept, rather than treating each neuron independently. Our results suggest that the mean-difference method is particularly ill-suited to the MLP intermediate space because it does not account for the compositional, hierarchical structure of neuron groups.
+
+\subsection{Implications for Steering Methods}
+
+Our findings have practical implications for activation steering:
+
+\para{Residual stream remains the best default.}
+For general-purpose steering with mean-difference vectors, the residual stream is strictly better: more efficient, more robust, and easier to work with. The $2.6\times$ efficiency advantage is large enough to matter in practice.
+
+\para{MLP space may excel with feature-based methods.}
+The sparsity and concentration we observe suggest that feature-based steering methods (\eg SNMF, transcoders) may unlock the potential of the MLP space. Direct mean-difference steering is a blunt instrument for a space that organizes information in sparse, specialized neuron groups.
+
+\para{Targeted neuron interventions deserve exploration.}
+Given that 86 neurons carry 50\% of the sentiment steering signal, intervening on just those neurons---with per-neuron scaling calibrated to their baseline activation ranges---could be more effective than full-vector addition.
+
+\subsection{Limitations}
+
+\para{Single concept.}
+We test only sentiment steering. Other concepts (\eg factuality, formality, language) may have different sparsity profiles in the MLP space, and our conclusions may not generalize.
+
+\para{Single model.}
+GPT-2 Small uses GELU activations, which produce less sparse intermediate representations than ReLU. Models with ReLU (\eg early Pythia) or SwiGLU (\eg Llama) MLPs may show different patterns, and the MLP space could be a better steering target in architectures with sparser activations.
+
+\para{Small dataset.}
+We use 25 contrastive prompt pairs, which may introduce noise in the steering vectors. Larger datasets could yield cleaner vectors, potentially narrowing the efficiency gap.
+
+\para{Greedy decoding.}
+All generations use greedy decoding (temperature 0). Sampling-based decoding might reveal different patterns, particularly at high $\alpha$ values where the distribution is heavily distorted.
+
+\para{Single layer.}
+Our steering experiments focus on layer 8. While the multi-layer probe analysis (layers 6--10) supports generalization, the optimal layer for MLP steering could differ from the optimal layer for residual stream steering.

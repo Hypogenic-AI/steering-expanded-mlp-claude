@@ -1,0 +1,67 @@
+\section{Methodology}
+\label{sec:method}
+
+\subsection{Model and Intervention Points}
+
+We use GPT-2 Small \citep{radford2019language} (124M parameters, 12 layers, $\dmodel = 768$, $\dmlp = 3072$) via TransformerLens \citep{nanda2022transformerlens}. We compare three intervention points at layer 8, chosen as a middle layer where representations are sufficiently processed:
+
+\begin{enumerate}[leftmargin=*,itemsep=0pt,topsep=0pt]
+    \item \textbf{Residual stream} (\residstream): \texttt{blocks.8.hook\_resid\_post}, 768-dim. The standard intervention target that integrates attention and MLP contributions.
+    \item \textbf{MLP intermediate} (\mlpinter): \texttt{blocks.8.mlp.hook\_post}, 3072-dim. The post-GELU expanded representation inside the MLP sublayer.
+    \item \textbf{MLP output} (\mlpout): \texttt{blocks.8.hook\_mlp\_out}, 768-dim. The MLP's contribution after down-projection by $\mW_{\text{out}}$, before addition to the residual stream.
+\end{enumerate}
+
+\subsection{Steering Vector Construction}
+
+We follow the mean-difference method of \citet{turner2023activation}. Given a set of positive-sentiment prompts $\{x_i^+\}_{i=1}^{25}$ and negative-sentiment prompts $\{x_i^-\}_{i=1}^{25}$, we collect activations $\vh_i^+$ and $\vh_i^-$ at each intervention point (at the last token position) and compute the steering vector:
+\begin{equation}
+    \sv = \frac{\bar{\vh}^+ - \bar{\vh}^-}{\|\bar{\vh}^+ - \bar{\vh}^-\|_2}, \quad \text{where} \quad \bar{\vh}^{\pm} = \frac{1}{25}\sum_{i=1}^{25} \vh_i^{\pm}.
+    \label{eq:sv}
+\end{equation}
+The vector is L2-normalized so that the scaling factor $\alpha$ controls the intervention magnitude on a common scale across spaces.
+
+\subsection{Steering Application}
+
+During inference, we add the scaled steering vector to activations at the corresponding hook point:
+\begin{equation}
+    \vh' = \vh + \alpha \cdot \sv.
+    \label{eq:steer}
+\end{equation}
+We test $\alpha \in \{0, 5, 10, 20, 50, 100, 200, 500\}$. Positive $\alpha$ steers toward positive sentiment.
+
+\subsection{Prompt Design}
+\label{sec:prompts}
+
+We construct three prompt sets:
+\begin{itemize}[leftmargin=*,itemsep=0pt,topsep=0pt]
+    \item \textbf{Positive} (25 prompts): Express clear positive sentiment (\eg ``I absolutely love this beautiful day, everything feels wonderful and'').
+    \item \textbf{Negative} (25 prompts): Express clear negative sentiment (\eg ``I absolutely hate this terrible day, everything feels awful and'').
+    \item \textbf{Neutral} (20 prompts): Sentiment-ambiguous inputs for evaluation (\eg ``The weather today is'').
+\end{itemize}
+
+\subsection{Evaluation Metrics}
+\label{sec:metrics}
+
+\para{Sentiment probability shift.}
+We define sets of 30 positive words ($\gP$: \emph{good, great, excellent, wonderful}, \ldots) and 30 negative words ($\gN$: \emph{bad, terrible, horrible, awful}, \ldots). For each neutral prompt, we measure the change in mean next-token probability:
+\begin{equation}
+    \Delta_{\text{sent}} = \frac{1}{|\gP|}\sum_{w \in \gP} p'(w) - \frac{1}{|\gN|}\sum_{w \in \gN} p'(w) - \left(\frac{1}{|\gP|}\sum_{w \in \gP} p(w) - \frac{1}{|\gN|}\sum_{w \in \gN} p(w)\right),
+    \label{eq:shift}
+\end{equation}
+where $p(w)$ and $p'(w)$ are the baseline and steered next-token probabilities.
+
+\para{KL divergence.}
+We measure $\KL(p' \| p)$ between the steered and baseline next-token distributions to quantify the magnitude of distributional perturbation, averaged over neutral prompts.
+
+\para{Steering efficiency.}
+We define efficiency as $\eta = \Delta_{\text{sent}} / \KL(p' \| p)$, which measures the sentiment shift achieved per unit of distributional change. This enables fair comparison across spaces that may require different $\alpha$ values for the same effect.
+
+\para{Linear probe accuracy.}
+We train L2-regularized logistic regression classifiers (5-fold cross-validation) on the collected activations to predict sentiment polarity, measuring how linearly separable the concept is in each space.
+
+\para{Sparsity metrics.}
+We characterize the sparsity of both activations and steering vectors using the Gini coefficient, kurtosis, near-zero fraction ($L^0$), and top-$k$ concentration (fraction of squared norm in the top $k$\% of dimensions).
+
+\subsection{Multi-Layer Analysis}
+
+To verify that our findings generalize beyond layer 8, we repeat the linear probe analysis across layers 6--10, spanning the middle portion of the network.

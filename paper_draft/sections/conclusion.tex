@@ -1,0 +1,8 @@
+\section{Conclusion}
+\label{sec:conclusion}
+
+We conducted the first systematic comparison of mean-difference activation steering across three intervention spaces in GPT-2 Small: the residual stream, the MLP intermediate (post-GELU) space, and the MLP output. Our central finding is that the MLP intermediate space can be steered, but is $2.6\times$ less efficient than the residual stream. The wider space is not more linearly separable (76\% vs.\ 86\% probe accuracy), and its steering vector is remarkably concentrated: 2.8\% of neurons carry 50\% of the signal. This concentration makes MLP steering fragile under strong interventions.
+
+These results resolve a gap in the steering literature. While prior work shows that \emph{learned} MLP features (via SNMF or transcoders) can outperform residual-stream methods, we show that the simplest approach---mean-difference steering---is substantially worse in the MLP space. The MLP intermediate space organizes information in specialized neuron groups that resist the broad perturbations of mean-difference vectors. The residual stream, as an integrative representation, provides a more universal and robust target.
+
+Looking forward, three directions seem promising. First, combining mean-difference vectors with feature-based methods (\eg steering only the top-$k$ neurons identified by our sparsity analysis) could bridge the gap between simple and learned approaches. Second, testing on models with sparser MLP activations (ReLU or SwiGLU architectures) may reveal settings where MLP steering is more effective. Third, multi-concept analysis would clarify whether the sparsity patterns we observe for sentiment generalize across the space of steer-able concepts.

@@ -1,0 +1,389 @@
+{
+  "config": {
+    "model": "gpt2",
+    "main_layer": 8,
+    "layers_tested": [
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "n_positive_prompts": 25,
+    "n_negative_prompts": 25,
+    "n_neutral_prompts": 20,
+    "seed": 42,
+    "device": "cuda:0"
+  },
+  "steering_effectiveness": {
+    "resid_stream": {
+      "kl_targets": [
+        0.5,
+        1.0,
+        2.0,
+        5.0
+      ],
+      "mean_sentiment": [
+        0.5,
+        0.1,
+        0.1,
+        0.0
+      ],
+      "std_sentiment": [
+        0.5,
+        0.30000000000000004,
+        0.30000000000000004,
+        0.0
+      ],
+      "mean_perplexity": [
+        8.216457033157349,
+        10.9224862575531,
+        17.80641074180603,
+        42.22400302886963
+      ],
+      "std_perplexity": [
+        3.24684500757406,
+        5.73808604678238,
+        25.366634561552317,
+        56.4993325988291
+      ],
+      "mean_alpha": [
+        63.671875,
+        97.265625,
+        128.3203125,
+        159.521484375
+      ]
+    },
+    "mlp_intermediate": {
+      "kl_targets": [
+        0.5,
+        1.0,
+        2.0,
+        5.0
+      ],
+      "mean_sentiment": [
+        0.1,
+        0.2,
+        0.1,
+        0.0
+      ],
+      "std_sentiment": [
+        0.30000000000000004,
+        0.4000000000000001,
+        0.30000000000000004,
+        0.0
+      ],
+      "mean_perplexity": [
+        7.825874614715576,
+        8.741567802429199,
+        13.955708551406861,
+        7.6269396305084225
+      ],
+      "std_perplexity": [
+        3.6408955532938556,
+        3.57601540663869,
+        16.546770789175966,
+        3.3199623583923255
+      ],
+      "mean_alpha": [
+        28.125,
+        41.40625,
+        63.76953125,
+        106.0546875
+      ]
+    },
+    "mlp_output": {
+      "kl_targets": [
+        0.5,
+        1.0,
+        2.0,
+        5.0
+      ],
+      "mean_sentiment": [
+        0.1,
+        0.2,
+        0.1,
+        0.0
+      ],
+      "std_sentiment": [
+        0.30000000000000004,
+        0.4000000000000001,
+        0.30000000000000004,
+        0.0
+      ],
+      "mean_perplexity": [
+        7.20732810497284,
+        8.550624370574951,
+        13.955708551406861,
+        6.764554262161255
+      ],
+      "std_perplexity": [
+        3.1694917971820735,
+        3.4009232334105217,
+        16.546770789175966,
+        1.2568775231174631
+      ],
+      "mean_alpha": [
+        73.4375,
+        107.03125,
+        164.6484375,
+        274.609375
+      ]
+    }
+  },
+  "linearity": {
+    "resid_stream": {
+      "mean_accuracy": 0.8600000000000001,
+      "std_accuracy": 0.10198039027185571,
+      "dim": 768
+    },
+    "mlp_intermediate": {
+      "mean_accuracy": 0.76,
+      "std_accuracy": 0.16248076809271922,
+      "dim": 3072
+    },
+    "mlp_output": {
+      "mean_accuracy": 0.8,
+      "std_accuracy": 0.0632455532033676,
+      "dim": 768
+    }
+  },
+  "sparsity": {
+    "resid_stream": {
+      "l0_fraction": 0.38166666666666665,
+      "gini_coefficient": 0.4427725449161317,
+      "exact_zero_fraction": 0.0,
+      "kurtosis": 5.411712169647217,
+      "top_10pct_concentration": 0.36540788412094116,
+      "dim": 768
+    },
+    "mlp_intermediate": {
+      "l0_fraction": 0.10778645833333333,
+      "gini_coefficient": 0.22250940804487973,
+      "exact_zero_fraction": 0.0,
+      "kurtosis": 9.535555839538574,
+      "top_10pct_concentration": 0.19395971298217773,
+      "dim": 3072
+    },
+    "mlp_output": {
+      "l0_fraction": 0.3299479166666667,
+      "gini_coefficient": 0.32893920772685514,
+      "exact_zero_fraction": 0.0,
+      "kurtosis": 6.558434963226318,
+      "top_10pct_concentration": 0.28058725595474243,
+      "dim": 768
+    }
+  },
+  "reliability": {
+    "resid_stream": {
+      "mean_sentiment": 0.05,
+      "std_sentiment": 0.21794494717703364,
+      "cv_sentiment": 4.358898071761058,
+      "mean_kl": 2.000650954246521,
+      "std_kl": 0.04853728407471153,
+      "sentiments": [
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "mlp_intermediate": {
+      "mean_sentiment": 0.05,
+      "std_sentiment": 0.21794494717703364,
+      "cv_sentiment": 4.358898071761058,
+      "mean_kl": 1.9932885944843293,
+      "std_kl": 0.054595898821111606,
+      "sentiments": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "mlp_output": {
+      "mean_sentiment": 0.05,
+      "std_sentiment": 0.21794494717703364,
+      "cv_sentiment": 4.358898071761058,
+      "mean_kl": 1.9942338526248933,
+      "std_kl": 0.06107604563913523,
+      "sentiments": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  "geometry": {
+    "resid_stream": {
+      "norm": 9.569256782531738,
+      "sparsity": 0.052083333333333336,
+      "entropy": 6.338846206665039,
+      "max_entropy": 6.643789733147672,
+      "normalized_entropy": 0.9541009666574505,
+      "dims_for_90pct_norm": 330,
+      "frac_for_90pct_norm": 0.4296875,
+      "dim": 768
+    },
+    "mlp_intermediate": {
+      "norm": 1.249187707901001,
+      "sparsity": 0.23046875,
+      "entropy": 7.408577919006348,
+      "max_entropy": 8.030084094267563,
+      "normalized_entropy": 0.9226027812454803,
+      "dims_for_90pct_norm": 609,
+      "frac_for_90pct_norm": 0.1982421875,
+      "dim": 3072
+    },
+    "mlp_output": {
+      "norm": 3.235065221786499,
+      "sparsity": 0.033854166666666664,
+      "entropy": 6.347279071807861,
+      "max_entropy": 6.643789733147672,
+      "normalized_entropy": 0.9553702520324449,
+      "dims_for_90pct_norm": 336,
+      "frac_for_90pct_norm": 0.4375,
+      "dim": 768
+    }
+  },
+  "layer_linearity": {
+    "resid_stream": {
+      "6": 0.8200000000000001,
+      "7": 0.9,
+      "8": 0.8600000000000001,
+      "9": 0.8600000000000001,
+      "10": 0.8
+    },
+    "mlp_intermediate": {
+      "6": 0.8400000000000001,
+      "7": 0.8,
+      "8": 0.76,
+      "9": 0.7200000000000001,
+      "10": 0.7
+    },
+    "mlp_output": {
+      "6": 0.78,
+      "7": 0.8800000000000001,
+      "8": 0.8,
+      "9": 0.8800000000000001,
+      "10": 0.8200000000000001
+    }
+  },
+  "example_generations": {
+    "resid_stream": {
+      "0.5": [
+        "<|endoftext|>The weather today is good for the city of San Francisco.\n\nThe San Francisco Bay Area is a great place to live and work.\n\nThe Bay Area is a great place to live and work.\n\n",
+        "<|endoftext|>I went to the store and bought a new pair of T-shirt and a pair of T-shirt-sized T-shirt-sized T-shirt-sized T-shirt-sized T-shirt-sized T-shirt",
+        "<|endoftext|>The meeting started at noon and was held at the North Carolina State Fair's North Carolina State Fair's North Carolina State Fair's North Carolina State Fair's North Carolina State Fair's North Carolina State Fair's North Carolina State Fair's North"
+      ],
+      "1.0": [
+        "<|endoftext|>The weather today is great and sunny in North Carolina's North Carolina State Fair's North Carolina State Fair's North Carolina State Fair's North Carolina State Fair's North Carolina State Fair's North Carolina State Fair's North Carolina State",
+        "<|endoftext|>I went to the store and bought a new Canon Canon Canon Canon Canon Canon Canon Canon Canon Canon Canon Canon Canon Canon Canon Canon Canon Canon Canon Canon Canon Canon Canon Canon Canon Canon Canon Canon Canon Canon Canon Canon Canon Canon Canon Canon Canon",
+        "<|endoftext|>The meeting started at noon and was held at the North West Bank's North West Bank City of Light, a small, quiet, quiet city in the northern West Bank of Israel, in the early morning of June 6, at the"
+      ],
+      "2.0": [
+        "<|endoftext|>The weather today isAmolm'sAmolm'sAmolm'sAmolm'sAmolm'sAmolm'sAmolm'sAmolm's",
+        "<|endoftext|>I went to the store and picked up a nice-sized-dove-machi-machi-machi-machi-machi-machi-machi-machi-machi-machi-",
+        "<|endoftext|>The meeting started at noon and was a great way to meet up with a local person who is in-line with the company's new-or-great-company-in-new-city-in-new-city-"
+      ],
+      "5.0": [
+        "<|endoftext|>The weather today isAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "<|endoftext|>I went to the store andAmolodeAmolodeAmolodeAmolodeAmolodeAmolodeAmolodeAmolodeAmolodeAmolode",
+        "<|endoftext|>The meeting started at noon and isAmolm'sAmolm'sAmolm'sAmolm'sAmolm'sAmolm'sAmolm'sAmolm"
+      ]
+    },
+    "mlp_intermediate": {
+      "0.5": [
+        "<|endoftext|>The weather today is pretty good.\n\nThe sun is just beginning to rise.\n\nThe sun is just beginning to rise.\n\nThe sun is just beginning to rise.\n\nThe sun is just beginning",
+        "<|endoftext|>I went to the store and bought a new car. I was to drive to a local bike shop and buy a new bike. I was to drive to a local bike shop and buy a new bike. I was to drive to",
+        "<|endoftext|>The meeting started at noon and was to begin at 6:30 p.m.\n\nThe group of five people who were to be to start a small business, a small business that was to be a small business, was"
+      ],
+      "1.0": [
+        "<|endoftext|>The weather today is a great day for a day to be a day to be a day to be a day to be a day to be a day to be a day to be a day to be a day to be",
+        "<|endoftext|>I went to the store and had a great time.\n\nI was to start a business and travel to a small town.\n\nI was to start a business and travel to a small business.\n\nI was to",
+        "<|endoftext|>The meeting started at noon and was to be a family-friendly group.\n\nThe group was to be a family-friendly group.\n\nThe group was to be a family-friendly group.\n\nThe group was"
+      ],
+      "2.0": [
+        "<|endoftext|>The weather today is to beOne.\n\nThe day to beOne is to beOne.\n\nThe day to beOne is to beOne.\n\nThe day to beOne is to beOne.",
+        "<|endoftext|>I went to the store and had to say.\n\nA popular music and music-related company.\n\nA popular music and music-related company.\n\nA popular music and music-related company.\n\nA",
+        "<|endoftext|>The meeting started at noon and was to be a small group of people who was to be a small group.\n\nThe group was to be a small group of people who was to be a small group.\n\nThe group"
+      ],
+      "5.0": [
+        "<|endoftext|>The weather today isaearly1919191919191919191919191919191919191919191919191919191919191919191919191919",
+        "<|endoftext|>I went to the store andaearly1919191919191919191919191919191919191919191919191919191919191919191919191919",
+        "<|endoftext|>The meeting started at noon andearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearly"
+      ]
+    },
+    "mlp_output": {
+      "0.5": [
+        "<|endoftext|>The weather today is pretty good.\n\nThe sun is just beginning to rise.\n\nThe sun is just beginning to rise.\n\nThe sun is just beginning to rise.\n\nThe sun is just beginning",
+        "<|endoftext|>I went to the store and bought a new car. I was to drive to a local bike shop and buy a new bike. I was to drive to a local bike shop and buy a new bike. I was to drive to",
+        "<|endoftext|>The meeting started at noon and was to be held by a group of people who were to be a small group of people who were to be a small group of people who were to be a small group of people who were to be"
+      ],
+      "1.0": [
+        "<|endoftext|>The weather today is a great day for a day to be a day to be a day to be a day to be a day to be a day to be a day to be a day to be a day to be",
+        "<|endoftext|>I went to the store and had a great time.\n\nI was to start a business and travel to a small town.\n\nI was to start a business and travel to a small business.\n\nI was to",
+        "<|endoftext|>The meeting started at noon and was to be a family-friendly group.\n\nThe group was to be a family-friendly group.\n\nThe group was to be a family-friendly group.\n\nThe group was"
+      ],
+      "2.0": [
+        "<|endoftext|>The weather today is to beOne.\n\nThe day to beOne is to beOne.\n\nThe day to beOne is to beOne.\n\nThe day to beOne is to beOne.",
+        "<|endoftext|>I went to the store and had to say.\n\nA popular music and music-related company.\n\nA popular music and music-related company.\n\nA popular music and music-related company.\n\nA",
+        "<|endoftext|>The meeting started at noon and was to be a small group of people who was to be a small group.\n\nThe group was to be a small group of people who was to be a small group.\n\nThe group"
+      ],
+      "5.0": [
+        "<|endoftext|>The weather today isaearly1919191919191919191919191919191919191919191919191919191919191919191919191919",
+        "<|endoftext|>I went to the store andaearly1919191919191919191919191919191919191919191919191919191919191919191919191919",
+        "<|endoftext|>The meeting started at noon andearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearlyearly"
+      ]
+    }
+  }
+}

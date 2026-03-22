@@ -1,0 +1,832 @@
+You are an academic paper writer. Generate a complete NEURIPS style paper
+based on the experiment results provided.
+
+════════════════════════════════════════════════════════════════════════════════
+                         IMPORTANT: BEFORE YOU START
+════════════════════════════════════════════════════════════════════════════════
+
+Before writing any content, you MUST complete these steps:
+
+1. READ THE SKILL: Review the paper-writer skill at .claude/skills/paper-writer/SKILL.md
+2. READ THE STYLE GUIDE: Study templates/paper_writing/lab_style_guide.md carefully
+3. REVIEW EXAMPLES: Browse paper_examples/ for formatting and language patterns:
+   - Look at sections/1.introduction.tex for language style
+   - Look at tables/*.tex for table formatting
+   - Look at commands/*.tex for macro usage
+4. VERIFY COMMAND TEMPLATES: Command templates (math.tex, general.tex, macros.tex) are pre-copied to paper_draft/commands/
+
+CRITICAL: Reference example papers for FORMATTING and LANGUAGE STYLE only.
+Do NOT copy content, phrasing, or narrative structure from the example papers.
+The examples are in a different research domain - focus only on presentation style.
+
+════════════════════════════════════════════════════════════════════════════════
+                            EXPERIMENT REPORT
+════════════════════════════════════════════════════════════════════════════════
+
+# Steering in the Expanded MLP Space: Can We Steer in the 4x Wider Intermediate Space?
+
+## 1. Executive Summary
+
+We systematically compared activation steering in the **MLP intermediate space** (3072-dim, post-GELU) versus the standard **residual stream** (768-dim) in GPT-2 Small. Our key finding is that **steering works in the MLP intermediate space but is approximately 2.6x less efficient** than residual stream steering, as measured by sentiment probability shift per unit of KL divergence. The MLP intermediate steering vector is remarkably **sparse** — just 2.8% of neurons (86/3072) carry 50% of the steering signal — but this concentration makes the space **more fragile**: steered generations degrade to gibberish at lower intervention strengths compared to the residual stream. Linear probes also achieve lower accuracy in the MLP intermediate space (76%) than the residual stream (86%), contradicting the hypothesis that the wider space is &#34;more linear.&#34;
+
+**Bottom line**: The expanded MLP space can be steered, and its sparsity offers interesting properties for targeted interventions, but for general-purpose steering, the residual stream remains superior. The MLP space is harder to steer because individual MLP neurons encode specific, less universal information.
+
+## 2. Goal
+
+**Research Question**: Can we steer model behavior by intervening in the expanded MLP intermediate space (post-activation, 4x wider than the residual stream), and is it easier or harder than residual stream steering?
+
+**Hypotheses tested**:
+- H1: Steering vectors in the MLP intermediate space produce concept-aligned generations (**Supported**)
+- H2: MLP intermediate space has higher linear separability (**Rejected** — residual stream is more separable)
+- H3: MLP intermediate activations are naturally sparse with concentrated concept information (**Partially supported** — steering vectors are sparse, but activations themselves are not sparser than residual stream by Gini coefficient)
+- H4: Steering in MLP space is more/less reliable across prompts (**Inconclusive** — similar reliability at matched KL)
+
+**Why this matters**: Most activation steering research targets the residual stream. Understanding whether the 4x wider MLP intermediate space — where the model does most of its computation — is a better target could improve steering methods and inform interpretability research.
+
+## 3. Data Construction
+
+### Dataset Description
+We used three types of prompt sets, all manually constructed:
+
+| Prompt Set | Size | Purpose |
+|-----------|------|---------|
+| Positive sentiment | 25 prompts | Compute positive pole of steering vector |
+| Negative sentiment | 25 prompts | Compute negative pole of steering vector |
+| Neutral prompts | 20 prompts | Evaluate steering effect on unbiased inputs |
+
+### Example Samples
+
+**Positive**: &#34;I absolutely love this beautiful day, everything feels wonderful and&#34;
+**Negative**: &#34;I absolutely hate this terrible day, everything feels awful and&#34;
+**Neutral**: &#34;The weather today is&#34;
+
+### Sentiment Word Sets for Logit Evaluation
+- 30 positive words (good, great, excellent, wonderful, ...)
+- 30 negative words (bad, terrible, horrible, awful, ...)
+- Used to measure probability shift in next-token distribution
+
+## 4. Experiment Description
+
+### Methodology
+
+#### Model
+- **GPT-2 Small** (124M parameters) via TransformerLens
+- d_model = 768, d_mlp = 3072, 12 layers
+- GPU: NVIDIA RTX A6000 (49GB)
+
+#### Intervention Points Compared
+| Name | Hook Point | Dimensionality | Description |
+|------|-----------|----------------|-------------|
+| resid_stream | `blocks.8.hook_resid_post` | 768 | Standard residual stream |
+| mlp_intermediate | `blocks.8.mlp.hook_post` | 3072 | Post-GELU MLP hidden state |
+| mlp_output | `blocks.8.hook_mlp_out` | 768 | MLP output (after W_out projection) |
+
+All experiments used **layer 8** (middle of the network) as the primary intervention layer, with multi-layer analysis across layers 6-10.
+
+#### Steering Vector Construction
+Mean-difference method (ActAdd): `sv = mean(positive_activations) - mean(negative_activations)` at the last token position. Each vector is L2-normalized before application.
+
+#### Evaluation Metrics
+1. **Sentiment probability shift**: Change in mean probability of positive vs. negative sentiment words in next-token distribution
+2. **KL divergence**: Measures magnitude of distributional perturbation from baseline
+3. **Steering efficiency**: Sentiment shift per unit KL divergence
+4. **Linear probe accuracy**: 5-fold cross-validated logistic regression accuracy
+5. **Sparsity metrics**: Gini coefficient, kurtosis, zero fraction, top-k concentration
+6. **Perplexity**: Fluency of steered generations
+
+### Experimental Protocol
+
+- Random seed: 42
+- Python 3.12.8, PyTorch 2.10.0+cu128
+- TransformerLens 2.15.4
+- Alpha values tested: 0, 5, 10, 20, 50, 100, 200, 500
+- 15 neutral prompts used for logit-based evaluation
+- Greedy decoding for generation (temperature=0)
+
+## 5. Result Analysis
+
+### Key Finding 1: Residual Stream Steering is 2.6x More Efficient
+
+| Space | Best Efficiency (shift/KL) | Best Alpha | Max Positive Shift |
+|-------|---------------------------|------------|-------------------|
+| resid_stream | **0.0130** | 10 | +0.000665 |
+| mlp_output | 0.0062 | 10 | +0.000248 |
+| mlp_intermediate | 0.0048 | 5 | +0.000243 |
+
+The residual stream produces more sentiment shift per unit of KL divergence at every operating point. The MLP intermediate space achieves its peak shift at lower alpha values but with a smaller maximum effect.
+
+All methods show an **inverted-U pattern**: steering improves sentiment at moderate strengths, then reverses and degrades fluency at high strengths (alpha &gt; 100-200).
+
+![Steering Efficiency](results/plots/enhanced_steering_efficiency.png)
+
+### Key Finding 2: MLP Intermediate Space is Less Linearly Separable
+
+| Space | Dimensionality | Linear Probe Accuracy (5-fold CV) |
+|-------|---------------|----------------------------------|
+| resid_stream | 768 | **0.860 ± 0.102** |
+| mlp_output | 768 | 0.800 ± 0.063 |
+| mlp_intermediate | 3072 | 0.760 ± 0.163 |
+
+Despite being 4x wider, the MLP intermediate space has **lower** linear probe accuracy and **higher** variance. This contradicts the hypothesis that the wider space should be &#34;more linear.&#34;
+
+**Multi-layer analysis** (layers 6-10) confirms this pattern:
+
+| Layer | resid_stream | mlp_intermediate | mlp_output |
+|-------|-------------|-----------------|------------|
+| 6 | 0.820 | 0.840 | 0.780 |
+| 7 | **0.900** | 0.800 | 0.880 |
+| 8 | 0.860 | 0.760 | 0.800 |
+| 9 | 0.860 | 0.720 | 0.880 |
+| 10 | 0.800 | 0.700 | 0.820 |
+
+The residual stream is consistently more separable, and the gap widens in later layers. The exception is layer 6 where MLP intermediate slightly leads — possibly because early layers encode more distributed, less concept-specific features.
+
+![Linearity Comparison](results/plots/linearity_comparison.png)
+![Layer Linearity](results/plots/layer_linearity.png)
+
+### Key Finding 3: MLP Steering Vectors Are Remarkably Sparse
+
+While the MLP intermediate *activations* are not sparser than the residual stream by Gini coefficient, the **steering vector** is highly concentrated:
+
+| Fraction of Norm² | Neurons Needed (out of 3072) | Percentage |
+|-------------------|------------------------------|-----------|
+| 50% | 86 | **2.8%** |
+| 90% | 609 | 19.8% |
+| 99% | 1648 | 53.6% |
+
+The single most important neuron (neuron 2002) accounts for 4.4% of the steering signal alone. The top 20 neurons carry 25.8%.
+
+In contrast, the residual stream steering vector requires 43% of dimensions for 90% of its norm.
+
+| Metric | resid_stream | mlp_intermediate | mlp_output |
+|--------|-------------|-----------------|------------|
+| Dims for 90% norm | 330 (43.0%) | **609 (19.8%)** | 336 (43.8%) |
+| Normalized entropy | 0.954 | **0.923** | 0.955 |
+| Steering vector sparsity | 5.2% | **23.1%** | 3.4% |
+
+![MLP SV Concentration](results/plots/mlp_sv_concentration.png)
+
+### Key Finding 4: MLP Intermediate Degrades Faster Under Strong Steering
+
+Qualitative examples at different steering strengths (&#34;The weather today is...&#34;):
+
+**Residual stream, alpha=50** (coherent, positive):
+&gt; &#34;...is good for a good time in the United States.&#34;
+
+**MLP intermediate, alpha=50** (coherent, positive):
+&gt; &#34;...is a great day to visit. The day is to be a great day to visit.&#34;
+
+**Residual stream, alpha=200** (degenerate):
+&gt; &#34;...isAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA&#34;
+
+**MLP intermediate, alpha=200** (degenerate, breaks earlier):
+&gt; &#34;...is191919191919191919191919191919&#34;
+
+The MLP intermediate space enters degenerate mode at lower alpha values, producing repetitive gibberish. This is consistent with the steering signal being concentrated in few neurons — pushing those neurons hard drives the model out of distribution faster.
+
+### Key Finding 5: Cross-Space Alignment
+
+| Cosine Similarity | Value |
+|-------------------|-------|
+| resid_sv vs projected(mlp_intermediate_sv) | 0.474 |
+| resid_sv vs mlp_output_sv | 0.474 |
+| projected(mlp_intermediate_sv) vs mlp_output_sv | **1.000** |
+
+The perfect cosine similarity between the projected MLP intermediate vector and the MLP output vector validates our methodology — the MLP output is exactly the W_out projection of the intermediate activations.
+
+The moderate alignment (0.47) between residual stream and MLP-projected vectors indicates they capture related but **different aspects** of sentiment. The residual stream integrates information from attention AND MLP, while the MLP-space vector captures only the MLP&#39;s contribution.
+
+### Sparsity Analysis
+
+| Metric | resid_stream | mlp_intermediate | mlp_output |
+|--------|-------------|-----------------|------------|
+| L0 (near-zero fraction) | 0.382 | 0.108 | 0.330 |
+| Gini coefficient | **0.443** | 0.223 | 0.329 |
+| Kurtosis | 5.4 | **9.5** | 6.6 |
+| Top-10% concentration | **0.365** | 0.194 | 0.281 |
+
+Counterintuitively, the residual stream activations are *sparser by Gini coefficient* than MLP intermediate activations. However, MLP intermediate has **higher kurtosis** (heavier tails), meaning it has more extreme outlier activations. This pattern is consistent with the MLP space having both many low-level active neurons and a few highly active &#34;expert&#34; neurons.
+
+### Hypothesis Testing
+
+| Hypothesis | Result | Evidence |
+|-----------|--------|---------|
+| H1: MLP steering produces concept-aligned text | **Supported** | Positive sentiment shift at moderate alphas; coherent positive generations |
+| H2: MLP space is more linearly separable | **Rejected** | Linear probe: 76% vs 86% (residual stream); gap widens in later layers |
+| H3: MLP space has concentrated concept info | **Partially supported** | Steering vector: 2.8% of neurons carry 50% of signal; but activations themselves not sparser |
+| H4: MLP steering is more/less reliable | **Inconclusive** | Similar CV at matched KL; insufficient differentiation with our metric |
+
+## 6. Conclusions
+
+### Summary
+Steering in the expanded MLP intermediate space is **possible but less efficient** than residual stream steering. The 4x wider space does not provide easier steering — instead, the specificity of MLP neurons makes the space more fragile under intervention. The steering signal in MLP space is remarkably concentrated (2.8% of neurons carry 50% of the effect), but this concentration means strong steering quickly drives the model out of distribution.
+
+### Interpretation: Why Is the MLP Space Harder to Steer?
+
+The MLP intermediate space is not &#34;more linear&#34; — it&#39;s more **specialized**. Each MLP neuron acts as a feature detector for specific patterns (as shown by the sparsity and kurtosis analysis). When we compute a mean-difference steering vector, we get a sparse direction that primarily activates a handful of specific neurons. But because these neurons are so specific, pushing them hard produces outputs that are incoherent in a way that residual stream interventions avoid.
+
+The residual stream, by contrast, integrates information from many sources (all previous layers, attention, and MLP). This makes it a **more universal representation space** — a single direction in residual stream space corresponds to a broader, more robust concept that degrades more gracefully under intervention.
+
+This answers the original question: the MLP space is harder to steer **because MLP neurons encode specific information that isn&#39;t as universal as the residual stream&#39;s geometry**.
+
+### Confidence in Findings
+- **High confidence** in the efficiency comparison (clear, consistent pattern across alphas)
+- **High confidence** in the linearity finding (replicated across 5 layers)
+- **Moderate confidence** in the sparsity interpretation (limited to one concept/model)
+- **Low confidence** in reliability conclusions (metric sensitivity issues)
+
+## 7. Next Steps
+
+### Immediate Follow-ups
+1. **Feature-based steering** (SNMF, transcoders) vs direct mean-difference steering — the literature suggests feature-based MLP steering outperforms; our results show direct mean-difference is worse
+2. **More concepts**: Test beyond sentiment (factuality, language, formality) to see if sparsity patterns generalize
+3. **Larger models**: GPT-2 Small has GELU, not ReLU — models with ReLU MLPs (e.g., Llama) may have sparser intermediate spaces
+
+### Alternative Approaches
+- **Targeted neuron steering**: Given the concentration finding (86 neurons for 50%), steering just the top-k neurons might be more effective than adding a full 3072-dim vector
+- **Adaptive alpha per neuron**: Scale intervention strength proportionally to each neuron&#39;s baseline activation range
+- **Combined residual + MLP steering**: Apply complementary steering in both spaces simultaneously
+
+### Open Questions
+- Does the sparse structure of MLP steering vectors correspond to interpretable neuron groups (as the SNMF paper suggests)?
+- Would steering in the MLP intermediate space be more effective if limited to neurons that actually activate for the concept of interest?
+- How do these findings change with SwiGLU-based MLPs (as in modern LLMs like Llama)?
+
+## References
+
+1. Dunefsky et al. (2024). &#34;Transcoders Find Interpretable LLM Feature Circuits.&#34; NeurIPS 2024.
+2. Shafran et al. (2025). &#34;Decomposing MLP Activations into Interpretable Features via SNMF.&#34;
+3. Turner et al. (2023). &#34;Activation Addition: Steering Language Models Without Optimization.&#34;
+4. Cunningham et al. (2023). &#34;Sparse Autoencoders Find Highly Interpretable Features in Language Models.&#34;
+5. Tan et al. (2024). &#34;Analyzing the Generalization and Reliability of Steering Vectors.&#34;
+6. Zou et al. (2023). &#34;Representation Engineering: A Top-Down Approach to AI Transparency.&#34;
+
+## Appendix: Environment
+
+| Component | Version |
+|-----------|---------|
+| Python | 3.12.8 |
+| PyTorch | 2.10.0+cu128 |
+| TransformerLens | 2.15.4 |
+| GPU | NVIDIA RTX A6000 (49GB) |
+| Total runtime | ~4 minutes |
+
+
+════════════════════════════════════════════════════════════════════════════════
+                            RESEARCH PLAN
+════════════════════════════════════════════════════════════════════════════════
+
+# Research Plan: Steering in the Expanded MLP Space
+
+## Motivation &amp; Novelty Assessment
+
+### Why This Research Matters
+Activation steering is a powerful technique for controlling LLM behavior at inference time, but nearly all work targets the residual stream. The MLP intermediate space is 4x wider (e.g., 3072 vs 768 in GPT-2 Small) and naturally sparse after the activation function — potentially offering a richer, more decomposable space for steering interventions. Understanding whether steering works better or worse here has direct implications for interpretability-based model control.
+
+### Gap in Existing Work
+The literature review reveals a critical gap: **no systematic comparison of direct activation steering in the MLP intermediate space vs the residual stream exists.** The SNMF paper (Shafran et al., 2025) shows SNMF-derived MLP features outperform SAEs at steering, but uses a feature-based approach rather than direct mean-difference steering. The ActAdd/CAA literature works exclusively in the residual stream. Nobody has asked the simple question: if you compute a mean-difference steering vector in the 3072-dim MLP intermediate space and add it there, how does it compare to the standard 768-dim residual stream approach?
+
+### Our Novel Contribution
+We conduct the first systematic comparison of direct activation steering across four intervention points in GPT-2 Small:
+1. **Residual stream** (768-dim) — the standard approach
+2. **MLP intermediate / post-activation** (3072-dim) — the expanded space
+3. **MLP output** (768-dim, after down-projection) — projected MLP contribution
+
+We also measure three properties that bear on *why* one space might be better:
+- **Linearity**: How well do linear probes classify concepts in each space?
+- **Sparsity**: How sparse are activations in the MLP intermediate space?
+- **Reliability**: How consistent is the steering effect across different input prompts?
+
+### Experiment Justification
+- **Experiment 1 (Steering Effectiveness)**: Core test — does steering work in the expanded MLP space? Compared at matched KL divergence for fairness.
+- **Experiment 2 (Linearity Analysis)**: Tests the hypothesis that the MLP space is &#34;more linear&#34; due to post-activation sparsity.
+- **Experiment 3 (Sparsity Analysis)**: Quantifies the natural sparsity structure of the expanded space.
+- **Experiment 4 (Reliability)**: Tests whether MLP-space steering is more or less consistent across inputs than residual-stream steering.
+
+## Research Question
+Can we steer model behavior by intervening in the expanded MLP intermediate space (post-activation, 4x wider than residual stream), and is it easier (due to linearity/sparsity) or harder (due to specificity) than residual stream steering?
+
+## Hypothesis Decomposition
+- **H1**: Steering vectors computed in the MLP intermediate space produce concept-aligned generations when applied there.
+- **H2**: MLP intermediate space has higher linear separability for concepts than the residual stream.
+- **H3**: MLP intermediate activations are naturally sparse, with concept information concentrated in few dimensions.
+- **H4**: Steering in the MLP intermediate space is more/less reliable across different input prompts than residual stream steering.
+
+## Proposed Methodology
+
+### Approach
+Use GPT-2 Small via TransformerLens. Compute mean-difference steering vectors from contrastive prompt pairs in both spaces. Apply steering at matched KL divergence budgets. Evaluate with automated metrics (sentiment classifier for SST-2 concept, perplexity for fluency).
+
+### Model
+- **GPT-2 Small** (12 layers, d_model=768, d_mlp=3072)
+- Well-studied, fast, pre-trained SAEs available for comparison
+
+### Concepts for Steering
+1. **Sentiment** (positive vs negative) — using SST-2 dataset
+2. We generate contrastive prompt pairs for activation collection
+
+### Experimental Steps
+1. Load GPT-2 Small, collect activations at residual stream and MLP intermediate for contrastive sentiment prompts
+2. Compute mean-difference steering vectors in each space
+3. Apply steering at multiple alpha values, measure KL divergence vs baseline
+4. Generate text with steering, evaluate concept alignment and fluency
+5. Train linear probes in both spaces, compare accuracy
+6. Measure activation sparsity (L0, Gini coefficient) in both spaces
+7. Measure steering effect variance across diverse prompts
+
+### Baselines
+- **No steering** (baseline generations)
+- **Residual stream ActAdd** (standard approach from Turner et al.)
+- **MLP output steering** (after down-projection, same dim as residual)
+
+### Evaluation Metrics
+- **Steering effectiveness**: Sentiment classifier score on steered generations
+- **Fluency**: Perplexity of steered text (lower = more fluent)
+- **Linear probe accuracy**: Classification accuracy in each space
+- **Sparsity**: L0 norm, Gini coefficient of activations
+- **Reliability**: Standard deviation of steering effect across prompts
+- **KL divergence**: Measures intervention magnitude
+
+### Statistical Analysis Plan
+- Compare metrics across spaces using paired t-tests (same prompts, different intervention points)
+- Report means ± standard deviations across prompts
+- Use multiple alpha/KL budgets to show curves, not just point estimates
+- Significance level: α = 0.05
+
+## Expected Outcomes
+- **If MLP space is better**: Higher concept alignment at same KL budget, higher linear probe accuracy, sparser activations
+- **If MLP space is worse**: Lower concept alignment (features too specific/local), lower reliability, requiring higher KL to achieve same effect
+- **Mixed outcome likely**: MLP space may be better for some concepts (those with dedicated neuron groups) but worse for others (distributed representations)
+
+## Timeline
+- Planning: 20 min ✓
+- Environment setup: 10 min
+- Implementation: 60 min
+- Experiments: 60 min
+- Analysis &amp; visualization: 30 min
+- Documentation: 20 min
+
+## Potential Challenges
+- MLP intermediate space is 4x larger — steering vectors may be noisier with limited data
+- Need to ensure fair comparison (matched KL divergence)
+- GPT-2 Small is small — results may not generalize to larger models
+- Sentiment may be too simple a concept — but good for proof-of-concept
+
+## Success Criteria
+- Clear quantitative comparison of steering effectiveness across spaces
+- Evidence for or against the linearity/sparsity hypotheses
+- Reproducible results with documented code
+
+
+════════════════════════════════════════════════════════════════════════════════
+                          LITERATURE REVIEW
+════════════════════════════════════════════════════════════════════════════════
+
+# Literature Review: Steering in the Expanded MLP Space
+
+## Research Area Overview
+
+This review covers research at the intersection of two areas in mechanistic interpretability: (1) **activation steering** — modifying model behavior by intervening on internal representations at inference time, and (2) **MLP interpretability** — understanding the intermediate (expanded) space within MLP sublayers of transformers. The central research question is whether the expanded MLP space (typically 4x wider than the residual stream) is a more effective or more interpretable target for behavioral steering than the residual stream.
+
+## Key Concepts
+
+### The Expanded MLP Space
+In a standard transformer MLP, the input from the residual stream (dimension `d_model`) is projected up to a wider intermediate space (dimension `d_mlp`, typically 4x `d_model`), passed through a nonlinearity (ReLU, GELU, or SwiGLU), then projected back down. This intermediate space is the &#34;expanded MLP space.&#34; Its higher dimensionality means features may be less superimposed than in the residual stream, potentially making it easier to identify and manipulate individual concepts.
+
+### Activation Steering
+Adding a &#34;steering vector&#34; to model activations during inference to change behavior without retraining. Most work has focused on steering in the residual stream. The key question is whether steering in the MLP intermediate space offers advantages.
+
+---
+
+## Core Papers
+
+### 1. Transcoders Find Interpretable LLM Feature Circuits
+**Dunefsky, Chlenski, Nanda (2024)** — NeurIPS 2024. [arXiv:2406.11944]
+
+**Key contribution**: Introduces **transcoders** — wide, sparsely-activating approximations of MLP sublayers that map MLP input directly to MLP output. Unlike SAEs (which reconstruct activations), transcoders approximate the MLP&#39;s *computation*.
+
+**Architecture**: `TC(x) = W_dec * ReLU(W_enc * x + b_enc) + b_dec`, where `d_features &gt;&gt; d_model`. This creates a sparse decomposition of MLP behavior in an expanded feature space.
+
+**Critical finding for our research**: Transcoders enable **input-invariant** circuit analysis. The attribution between transcoder feature pairs factorizes cleanly into: `z_TC(x) * (f_dec · f_enc&#39;)` — an input-dependent activation times an input-invariant weight-based connection. SAEs cannot provide this because the MLP nonlinearity makes attributions always input-dependent.
+
+**Comparison with SAEs**: Transcoders achieve equal or better sparsity-accuracy tradeoff compared to SAEs across GPT-2 Small, Pythia-410M, and Pythia-1.4B. The gap widens on larger models. Blind interpretability tests show 41/50 transcoder features are interpretable vs 38/50 for SAEs.
+
+**Relevance**: Transcoders directly operate in the expanded MLP space and show it can be decomposed into sparse, interpretable features. This is foundational for understanding whether this space is suitable for steering.
+
+**Code**: https://github.com/jacobdunefsky/transcoder_circuits
+
+---
+
+### 2. Decomposing MLP Activations into Interpretable Features via Semi-Nonnegative Matrix Factorization
+**Shafran, Geiger, Geva (2025)** — [arXiv:2506.10920]
+
+**Key contribution**: Uses **SNMF** to decompose MLP hidden activations (in the expanded space) directly, without training a neural network. Factorizes activation matrix `A ∈ R^{d_a × n}` into `Z ∈ R^{d_a × k}` (features as neuron combinations) and `Y ∈ R^{k × n}_≥0` (nonnegative coefficients mapping features to inputs).
+
+**Critical findings for our research**:
+- **SNMF features outperform SAEs AND supervised baselines (DiffMeans) on causal steering**, while performing comparably on concept detection. This is direct evidence that the MLP intermediate space is effective for steering.
+- Features are **compositional**: recursive SNMF reveals hierarchical structure (e.g., individual weekdays → weekday/weekend → day of week).
+- Semantically-related features **share core neurons** and are differentiated by exclusive neurons. Amplifying core neurons promotes all related concepts; amplifying exclusive neurons promotes one while suppressing others.
+- Features are sparse linear combinations of co-activated neurons, making them directly interpretable.
+
+**Models tested**: Llama 3.1-8B, Gemma 2 2B, GPT-2 Small.
+
+**Relevance**: This is the most directly relevant paper — it demonstrates that steering in the expanded MLP space (via neuron-group features) outperforms residual stream methods. The hierarchical compositional structure also suggests the MLP space may encode information in a more structured way.
+
+**Code**: https://github.com/ordavid-s/snmf-mlp-decomposition
+
+---
+
+### 3. Sparse Autoencoders Find Highly Interpretable Features in Language Models
+**Cunningham, Ewart, Riggs, Huben, Sharkey (2023)** — [arXiv:2309.08600]
+
+**Key contribution**: Foundational paper on training SAEs to decompose model activations into interpretable features. Shows that SAE features are more interpretable than individual neurons.
+
+**Relevance**: Establishes the baseline approach (SAEs on residual stream) that MLP-space methods improve upon.
+
+---
+
+### 4. Activation Addition: Steering Language Models Without Optimization
+**Turner et al. (2023)** — [arXiv:2308.10248]
+
+**Key contribution**: Introduces &#34;activation addition&#34; (ActAdd) — adding a steering vector (computed as the mean activation difference between contrastive prompts) to the residual stream. Simple and training-free.
+
+**Relevance**: Establishes the baseline for residual stream steering that MLP-space methods should be compared against.
+
+---
+
+### 5. Steering Language Model Refusal with Sparse Autoencoders
+**(2024)** — [arXiv:2411.02886]
+
+**Key contribution**: Uses SAE features to steer model refusal behavior, clamping specific SAE features to control whether models refuse harmful requests. Demonstrates feature-level steering via SAEs.
+
+**Relevance**: Shows SAE-based steering in practice; our research would extend this to MLP-space features.
+
+---
+
+### 6. Analyzing the Generalization and Reliability of Steering Vectors
+**Tan, Chanin, Lynch et al. (2024)** — [arXiv:2407.12404]
+
+**Key findings**: Steering vectors have substantial limitations both in- and out-of-distribution. Steerability is highly variable across inputs. Spurious biases can contribute to steering effectiveness. Steering vectors are sometimes brittle to prompt changes.
+
+**Relevance**: Establishes that residual-stream steering has reliability issues — our hypothesis is that MLP-space steering might be more reliable due to the space being more naturally decomposable.
+
+**Code**: https://github.com/dtch1997/steering-bench
+
+---
+
+### 7. Language Model Circuits Are Sparse in the Neuron Basis
+**(2026)** — [arXiv:2502.08148]
+
+**Key finding**: MLP computations are sparse in the neuron basis — only a small fraction of neurons contribute meaningfully to any given computation. This supports the idea that the expanded MLP space is naturally sparse and decomposable.
+
+**Relevance**: Direct evidence that the MLP intermediate space has natural sparsity structure that could be exploited for steering.
+
+---
+
+### 8. Representation Engineering: A Top-Down Approach to AI Transparency
+**Zou et al. (2023)** — [arXiv:2310.01405]
+
+**Key contribution**: Proposes representation engineering (RepE) — using linear probes and interventions on internal representations to understand and control model behavior. Works primarily in residual stream.
+
+**Relevance**: Provides the broader framework for representation-level interventions; MLP-space steering extends this.
+
+---
+
+## Additional Relevant Papers
+
+### Steering Methods
+- **Programming Refusal with Conditional Activation Steering (CAST)** (Lee et al., 2024): Conditional steering based on input patterns in hidden states. Code: github.com/IBM/activation-steering
+- **Multi-property Steering with Dynamic Activation Composition** (2024): Steers multiple properties simultaneously via composition.
+- **Interpretable Steering with Feature-Guided Activation Additions** (2025): Uses SAE features to guide which directions to steer.
+- **Scaling Laws for Activation Steering** (2025): Studies how steering effectiveness scales with model size.
+- **Angular Steering** (2025): Rotation-based steering in activation space.
+- **Beyond Linear Steering** (2025): Multi-attribute control moving beyond simple linear addition.
+- **Steer2Edit** (2026): Component-level editing derived from steering insights.
+
+### MLP Interpretability
+- **Automatically Identifying Local and Global Circuits** (Marks et al., 2024): Uses transcoders/SAEs for circuit discovery through MLP layers.
+- **The Knowledge Microscope** (2025): Features as better analytical lenses than neurons.
+- **Mechanistic Interpretability for AI Safety** (Bereska &amp; Gavves, 2024): Comprehensive review of the field.
+
+### Linear Representation Hypothesis
+- **Emergent Linear Representations in World Models** (Nanda et al., 2023): Shows linear board representations in Othello-GPT, controllable via vector arithmetic.
+- **Extracting Latent Steering Vectors** (Subramani et al., 2022): Early work on finding steering vectors in LM hidden states.
+
+---
+
+## Common Methodologies
+
+| Method | Space | Training Required | Key Advantage | Key Limitation |
+|--------|-------|-------------------|---------------|----------------|
+| ActAdd/CAA | Residual stream | No (contrast pairs) | Simple, fast | Input-dependent, unreliable OOD |
+| SAE features | Residual stream | Yes (SAE training) | Interpretable features | Poor causal performance |
+| SAE features | MLP output | Yes (SAE training) | Better grounded in MLP | Still in residual-stream space |
+| Transcoders | MLP expanded space | Yes (transcoder training) | Input-invariant circuits | Approximation error |
+| SNMF | MLP expanded space | No (matrix factorization) | Best steering, interpretable | Limited to k&lt;500 features tested |
+| DiffMeans | Residual/MLP output | No (supervised) | Strong baseline | Needs labeled data, noisy |
+
+## Standard Baselines
+- **ActAdd/CAA** (Turner et al., 2023; Rimsky et al., 2024): Mean activation difference steering
+- **DiffMeans** (Marks &amp; Tegmark, 2024): Supervised difference-in-means
+- **SAE feature clamping** (Templeton et al., 2024): Steering via SAE feature activation
+
+## Evaluation Metrics
+- **Concept detection score**: Log-ratio of feature activation on concept-related vs neutral inputs
+- **Concept steering score**: GPT-4 rated alignment of steered generations with target concept (0-2)
+- **Fluency score**: GPT-4 rated coherence of steered generations (0-2)
+- **KL divergence**: Measures perturbation magnitude during steering
+- **Cross-entropy loss increase**: Measures faithfulness of SAE/transcoder approximation
+- **L0 norm**: Sparsity of learned decomposition
+
+## Datasets in the Literature
+- **OpenWebText**: Standard corpus for SAE/transcoder training (GPT-2 family)
+- **The Pile**: Evaluation corpus for Pythia models
+- **TruthfulQA**: Evaluating factuality under steering
+- **SST-2**: Sentiment steering evaluation
+- **Concept-specific datasets**: Weekdays, languages, emotions (custom generated)
+
+## Gaps and Opportunities
+
+1. **No systematic comparison of steering in MLP expanded space vs residual stream**: The SNMF paper shows MLP features outperform SAEs at steering, but doesn&#39;t directly compare MLP-space ActAdd vs residual-stream ActAdd.
+
+2. **Linearity of MLP expanded space is understudied**: The hypothesis that the expanded space is &#34;more linear&#34; (due to ReLU creating a naturally sparse basis) hasn&#39;t been formally tested.
+
+3. **Transcoder features haven&#39;t been used for steering**: Transcoders were developed for circuit analysis, but their features could be directly used as steering vectors.
+
+4. **Scale of MLP decomposition is limited**: SNMF tested with k&lt;500 features. Transcoders use larger dictionaries but haven&#39;t been evaluated on steering tasks.
+
+5. **No comparison of steering reliability across spaces**: Steering vectors in residual stream are unreliable (Tan et al., 2024). Is MLP-space steering more reliable?
+
+6. **Interaction between MLP steering and attention**: How does steering in MLP space interact with the attention mechanism?
+
+## Recommendations for Our Experiment
+
+### Recommended Datasets
+- **OpenWebText** (1000-sample for prototyping, full for training)
+- **SST-2** (sentiment steering evaluation)
+- **TruthfulQA** (factuality steering evaluation)
+- Custom concept pairs (weekdays, languages, etc.) following SNMF paper methodology
+
+### Recommended Baselines
+- **ActAdd/CAA** in residual stream (simplest baseline)
+- **DiffMeans** in residual stream (strong supervised baseline)
+- **SAE feature steering** in residual stream
+- **SNMF steering** in MLP space (current SOTA for MLP-space steering)
+
+### Recommended Models
+- **GPT-2 Small** (most studied, pre-trained SAEs/transcoders available)
+- **Pythia-410M** (pre-trained transcoders available)
+- **Gemma 2 2B** or **Llama 3.1 8B** (for showing scaling)
+
+### Recommended Metrics
+- Concept steering score + fluency (following SNMF paper)
+- Concept detection score
+- Steering reliability across different inputs (following steering-bench)
+- Cross-entropy loss increase (measuring intervention distortion)
+
+### Methodological Considerations
+- Use TransformerLens for all model interventions (hook-based)
+- Use SAELens for loading pre-trained SAEs
+- Compare interventions at the same KL divergence budget for fair comparison
+- Test both MLP-input and MLP-intermediate (post-activation) intervention points
+
+
+════════════════════════════════════════════════════════════════════════════════
+                          PAPER REQUIREMENTS
+════════════════════════════════════════════════════════════════════════════════
+
+Generate a complete academic paper with the following structure:
+
+1. TITLE
+   - Clear, specific, informative
+   - Should convey main finding or contribution
+
+2. AUTHOR
+   - Use this exact author line in the \author{} block: Ari Holtzman and NeuriCo
+
+3. ABSTRACT (150-250 words)
+   - Problem statement
+   - Approach
+   - Key results
+   - Significance
+
+4. INTRODUCTION
+   - Research problem and motivation
+   - Gap in existing work
+   - Our contribution (be specific)
+   - Paper organization
+
+5. RELATED WORK
+   - Organized by theme/approach
+   - Position our work relative to prior work
+   - Cite papers from literature review
+
+6. METHODOLOGY
+   - Clear description of approach
+   - Experimental setup
+   - Datasets used
+   - Evaluation metrics
+   - Baselines
+
+7. RESULTS
+   - Present results with tables and figures
+   - Statistical analysis
+   - Comparison to baselines
+   - Ablation studies (if applicable)
+
+8. DISCUSSION
+   - Interpretation of results
+   - Limitations
+   - Broader implications
+
+9. CONCLUSION
+   - Summary of contributions
+   - Key findings
+   - Future work
+
+10. REFERENCES
+   - BibTeX format
+   - All cited papers
+
+════════════════════════════════════════════════════════════════════════════════
+                          OUTPUT FORMAT
+════════════════════════════════════════════════════════════════════════════════
+
+Create a MODULAR LaTeX project with the following directory structure:
+
+paper_draft/
+├── main.tex              # Main file that imports all sections
+├── references.bib        # BibTeX references
+├── sections/
+│   ├── abstract.tex      # Abstract content
+│   ├── introduction.tex  # Introduction section
+│   ├── related_work.tex  # Related work section
+│   ├── methodology.tex   # Methodology section
+│   ├── results.tex       # Results section
+│   ├── discussion.tex    # Discussion section
+│   └── conclusion.tex    # Conclusion section
+├── figures/              # Directory for any generated figures
+├── tables/               # Directory for complex standalone tables
+└── appendix/             # Directory for appendix sections (if needed)
+
+INSTRUCTIONS:
+1. First, create the directory structure above (mkdir -p paper_draft/sections paper_draft/figures paper_draft/tables paper_draft/appendix)
+2. Write main.tex using the EXACT preamble for NEURIPS:
+
+   \documentclass{article}
+   \usepackage[final]{neurips_2025}  % NEURIPS style (neurips_2025.sty is in paper_draft/)
+   \usepackage[hidelinks]{hyperref}  % REQUIRED: clickable links
+   \usepackage{booktabs}  % REQUIRED: professional tables
+   \usepackage{graphicx}
+   \usepackage{amsmath,amssymb}
+
+   % Import command files
+   \input{commands/math}
+   \input{commands/general}
+   \input{commands/macros}
+
+   % Use this bibliography style:
+   \bibliographystyle{plainnat}
+
+   \author{Ari Holtzman and NeuriCo}
+
+   - Use \input{sections/...} to include each section
+   - Use \bibliography{references} for references
+3. Write each section file with COMPLETE content (no placeholders)
+4. Each section file should include its \section{} command
+5. Write references.bib with all citations in BibTeX format
+6. After writing all files, compile the paper:
+   cd paper_draft && pdflatex -interaction=nonstopmode main.tex && bibtex main && pdflatex -interaction=nonstopmode main.tex && pdflatex -interaction=nonstopmode main.tex
+
+This modular structure allows humans to easily:
+- Edit individual sections without navigating a large file
+- Track changes per section
+- Reuse sections across different paper versions
+
+════════════════════════════════════════════════════════════════════════════════
+                          QUALITY REQUIREMENTS
+════════════════════════════════════════════════════════════════════════════════
+
+- Academic tone throughout
+- All claims must be supported by data from the experiment report
+- Proper citations using \cite{} commands
+- Clear figures and tables with proper captions
+- NO placeholder text - every section must have real content
+- The paper MUST compile without errors
+- If compilation fails, debug and fix the LaTeX errors
+
+════════════════════════════════════════════════════════════════════════════════
+                          LAB WRITING STYLE
+════════════════════════════════════════════════════════════════════════════════
+
+Follow these lab-specific conventions to match our paper style:
+
+1. LANGUAGE STYLE:
+   - Use active voice: "We propose", "We examine", "We focus on"
+   - Be direct and confident: "Our main question is...", "We hypothesize that..."
+   - State things clearly and simply - prefer plain language over jargon
+   - Use bold questions as paragraph organizers: {\bf what is X?}
+   - Include specific quantitative claims: "8.97% over baseline"
+   - Avoid fancy wording: "utilize" → "use", "facilitate" → "help"
+
+2. INTRODUCTION STRUCTURE:
+   - Engaging hook (get to the point quickly)
+   - Problem importance
+   - Gap identification
+   - Your approach with method figure reference
+   - Quantitative preview of results
+   - Contribution bullets (3-4 items, action verbs)
+
+3. CONTRIBUTION LISTS:
+   \begin{itemize}[leftmargin=*,itemsep=0pt,topsep=0pt]
+       \item We propose...
+       \item We conduct...
+       \item We complement...
+   \end{itemize}
+
+4. MODULAR COMMANDS STRUCTURE:
+   Command templates are pre-copied to paper_draft/commands/:
+   - math.tex: Math notation macros
+   - general.tex: Formatting macros
+   - macros.tex: Project-specific term definitions (customize this for your paper)
+
+   In main.tex, include:
+   \input{commands/math}
+   \input{commands/general}
+   \input{commands/macros}
+
+5. REFERENCE CONVENTIONS:
+   Use reference macros from math.tex:
+   - \figref{fig:name} for "figure 1" (lowercase, in-sentence)
+   - \Figref{fig:name} for "Figure 1" (capitalized, start of sentence)
+   - \secref{sec:name} for "section 2"
+
+6. TEXT FORMATTING:
+   - Use \para{Header text} for bold paragraph headers
+   - Define method/dataset names with \textsc and \xspace:
+     \newcommand{\methodname}{\textsc{MethodName}\xspace}
+
+7. TABLE FORMATTING:
+   - Use booktabs package (no vertical lines)
+   - Use \resizebox{\textwidth}{!}{...} for wide tables
+   - Use @{} to remove padding at table edges
+   - Use \cmidrule(lr){x-y} for sub-headers
+   - Use \textsc{} for dataset/method names in headers
+   - Bold best results with {\bf ...}
+
+8. FIGURE FORMATTING:
+   - Use 0.32\textwidth for 3-column subfigures
+   - Use 0.95\linewidth for full-width figures
+   - Use \input{figures/legend} for shared legends
+   - Write self-contained captions explaining key observations
+
+9. RESULTS PRESENTATION:
+   - Define \increase and \decrease for colored arrows (green up, red down)
+   - Bold best results in tables
+   - Report confidence intervals when available
+
+10. ALGORITHM STYLING:
+    - Use algpseudocode with [noend]
+    - Use \triangleright for comments
+
+11. HYPERLINKS (REQUIRED):
+    - Always use \usepackage[hidelinks]{hyperref} or with colored links
+    - All citations, section refs, figure refs, table refs must be clickable
+    - This is essential for reader navigation
+
+════════════════════════════════════════════════════════════════════════════════
+                          WORKFLOW: REVIEW AND REFLECT
+════════════════════════════════════════════════════════════════════════════════
+
+Before calling finish, you MUST complete these review steps:
+
+1. REVIEW RESOURCES (at the start):
+   - Read .claude/skills/paper-writer/SKILL.md for detailed guidance
+   - Study templates/paper_writing/lab_style_guide.md for style conventions
+   - Browse paper_examples/ for formatting and language patterns
+
+2. SELF-REFLECTION (before finishing):
+   After writing all sections, review your work against these criteria:
+
+   LANGUAGE CHECK:
+   - [ ] Is the writing clear and jargon-free?
+   - [ ] Are claims specific with quantitative support?
+   - [ ] Is active voice used throughout?
+
+   FORMATTING CHECK:
+   - [ ] Does main.tex include \input{commands/math}, \input{commands/general}, \input{commands/macros}?
+   - [ ] Is hyperref package included for clickable references?
+   - [ ] Do tables use booktabs (no vertical lines)?
+   - [ ] Are best results bolded in tables?
+   - [ ] Are figures/tables properly captioned?
+
+   STRUCTURE CHECK:
+   - [ ] Does introduction follow: hook → importance → gap → approach → preview → contributions?
+   - [ ] Are contribution bullets specific with action verbs?
+   - [ ] Does the paper compile without errors?
+
+3. FIX ISSUES:
+   - Address any issues found in the self-reflection
+   - Re-compile and verify the PDF looks correct
+
+Only after completing this review should you consider the paper finished.

@@ -1,0 +1,27 @@
+{
+  "success": true,
+  "stages": {
+    "resource_finder": {
+      "success": true,
+      "completion_marker": "/workspaces/steering-expanded-mlp-claude/.resource_finder_complete",
+      "outputs": {
+        "literature_review": "/workspaces/steering-expanded-mlp-claude/literature_review.md",
+        "resources_catalog": "/workspaces/steering-expanded-mlp-claude/resources.md",
+        "papers_dir": "/workspaces/steering-expanded-mlp-claude/papers",
+        "datasets_dir": "/workspaces/steering-expanded-mlp-claude/datasets",
+        "code_dir": "/workspaces/steering-expanded-mlp-claude/code"
+      },
+      "log_file": "/workspaces/steering-expanded-mlp-claude/logs/resource_finder_claude.log",
+      "transcript_file": "/workspaces/steering-expanded-mlp-claude/logs/resource_finder_claude_transcript.jsonl",
+      "elapsed_time": 1259.0874664783478
+    },
+    "experiment_runner": {
+      "success": true,
+      "return_code": 0,
+      "elapsed_time": 910.954836845398,
+      "log_file": "/workspaces/steering-expanded-mlp-claude/logs/execution_claude.log",
+      "transcript_file": "/workspaces/steering-expanded-mlp-claude/logs/execution_claude_transcript.jsonl"
+    }
+  },
+  "work_dir": "/workspaces/steering-expanded-mlp-claude"
+}

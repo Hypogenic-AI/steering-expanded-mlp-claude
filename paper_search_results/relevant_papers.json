@@ -1,0 +1,560 @@
+[
+  {
+    "title": "Emergent Linear Representations in World Models of Self-Supervised Sequence Models",
+    "year": 2023,
+    "authors": "Neel Nanda, Andrew Lee, Martin Wattenberg",
+    "url": "https://www.semanticscholar.org/paper/bb26227a94ddb2b0088a23e2ec0a170c40bc4d78",
+    "relevance": 3,
+    "abstract": "How do sequence models represent their decision-making process? Prior work suggests that Othello-playing neural network learned nonlinear models of the board state (Li et al., 2023a). In this work, we provide evidence of a closely related linear representation of the board. In particular, we show that probing for \u201cmy colour\u201d vs. \u201copponent\u2019s colour\u201d may be a simple yet powerful way to interpret the model\u2019s internal state. This precise understanding of the internal representations allows us to control the model\u2019s behaviour with simple vector arithmetic. Linear representations enable significant interpretability progress, which we demonstrate with further exploration of how the world model is computed.",
+    "citations": 290
+  },
+  {
+    "title": "Extracting Latent Steering Vectors from Pretrained Language Models",
+    "year": 2022,
+    "authors": "Nishant Subramani, Nivedita Suresh, Matthew E. Peters",
+    "url": "https://www.semanticscholar.org/paper/42b6b7ae57b2b784be7fa78bf98b1c61d2b62751",
+    "relevance": 3,
+    "abstract": "Prior work on controllable text generation has focused on learning how to control language models through trainable decoding, smart-prompt design, or fine-tuning based on a desired objective. We hypothesize that the information needed to steer the model to generate a target sentence is already encoded within the model. Accordingly, we explore a different approach altogether: extracting latent vectors directly from pretrained language model decoders without fine-tuning. Experiments show that there exist steering vectors, which, when added to the hidden states of the language model, generate a target sentence nearly perfectly (> 99 BLEU) for English sentences from a variety of domains. We show that vector arithmetic can be used for unsupervised sentiment transfer on the Yelp sentiment benchmark, with performance comparable to models tailored to this task. We find that distances between steering vectors reflect sentence similarity when evaluated on a textual similarity benchmark (STS-B), outperforming pooled hidden states of models. Finally, we present an analysis of the intrinsic properties of the steering vectors. Taken together, our results suggest that frozen LMs can be effectively controlled through their latent steering space.",
+    "citations": 167
+  },
+  {
+    "title": "Programming Refusal with Conditional Activation Steering",
+    "year": 2024,
+    "authors": "Bruce Lee, Inkit Padhi, K. Ramamurthy, Erik Miehling, Pierre L. Dognin, Manish Nagireddy, Amit Dhurandhar",
+    "url": "https://api.semanticscholar.org/CorpusId:272550481",
+    "relevance": 3,
+    "abstract": "LLMs have shown remarkable capabilities, but precisely controlling their response behavior remains challenging. Existing activation steering methods alter LLM behavior indiscriminately, limiting their practical applicability in settings where selective responses are essential, such as content moderation or domain-specific assistants. In this paper, we propose Conditional Activation Steering (CAST), which analyzes LLM activation patterns during inference to selectively apply or withhold activation steering based on the input context. Our method is based on the observation that different categories of prompts activate distinct patterns in the model's hidden states. Using CAST, one can systematically control LLM behavior with rules like\"if input is about hate speech or adult content, then refuse\"or\"if input is not about legal advice, then refuse.\"This allows for selective modification of responses to specific content while maintaining normal responses to other content, all without requiring weight optimization. We release an open-source implementation of our framework at github.com/IBM/activation-steering .",
+    "citations": 99
+  },
+  {
+    "title": "Analyzing the Generalization and Reliability of Steering Vectors",
+    "year": 2024,
+    "authors": "Daniel Tan, David Chanin, Aengus Lynch, Dimitrios Kanoulas, Brooks Paige, Adri\u00e0 Garriga-Alonso, Robert Kirk",
+    "url": "https://www.semanticscholar.org/paper/e4fdb3241176edaa0dcdba82e4c0639ea65cc225",
+    "relevance": 3,
+    "abstract": "Steering vectors (SVs) have been proposed as an effective approach to adjust language model behaviour at inference time by intervening on intermediate model activations. They have shown promise in terms of improving both capabilities and model alignment. However, the reliability and generalisation properties of this approach are unknown. In this work, we rigorously investigate these properties, and show that steering vectors have substantial limitations both in- and out-of-distribution. In-distribution, steerability is highly variable across different inputs. Depending on the concept, spurious biases can substantially contribute to how effective steering is for each input, presenting a challenge for the widespread use of steering vectors. Out-of-distribution, while steering vectors often generalise well, for several concepts they are brittle to reasonable changes in the prompt, resulting in them failing to generalise well. Overall, our findings show that while steering can work well in the right circumstances, there remain technical difficulties of applying steering vectors to guide models' behaviour at scale. Our code is available at https://github.com/dtch1997/steering-bench",
+    "citations": 69
+  },
+  {
+    "title": "Improving Instruction-Following in Language Models through Activation Steering",
+    "year": 2024,
+    "authors": "Alessandro Stolfo, Vidhisha Balachandran, Safoora Yousefi, Eric Horvitz, Besmira Nushi",
+    "url": "https://www.semanticscholar.org/paper/a05c63c52f4cde0d334178e81372e8c6f3fb566f",
+    "relevance": 3,
+    "abstract": "The ability to follow instructions is crucial for numerous real-world applications of language models. In pursuit of deeper insights and more powerful capabilities, we derive instruction-specific vector representations from language models and use them to steer models accordingly. These vectors are computed as the difference in activations between inputs with and without instructions, enabling a modular approach to activation steering. We demonstrate how this method can enhance model adherence to constraints such as output format, length, and word inclusion, providing inference-time control over instruction following. Our experiments across four models demonstrate how we can use the activation vectors to guide models to follow constraints even without explicit instructions and to enhance performance when instructions are present. Additionally, we explore the compositionality of activation steering, successfully applying multiple instructions simultaneously. Finally, we demonstrate that steering vectors computed on instruction-tuned models can transfer to improve base models. Our findings demonstrate that activation steering offers a practical and scalable approach for fine-grained control in language generation. Our code and data are available at https://github.com/microsoft/llm-steer-instruct.",
+    "citations": 93
+  },
+  {
+    "title": "Controlling Language and Diffusion Models by Transporting Activations",
+    "year": 2024,
+    "authors": "Pau Rodr\u00edguez L\u00f3pez, Arno Blaas, Michal Klein, L. Zappella, N. Apostoloff, Marco Cuturi, Xavier Suau",
+    "url": "https://www.semanticscholar.org/paper/6b04d1a6c631371ef737a64bc595abb992a56776",
+    "relevance": 3,
+    "abstract": "The increasing capabilities of large generative models and their ever more widespread deployment have raised concerns about their reliability, safety, and potential misuse. To address these issues, recent works have proposed to control model generation by steering model activations in order to effectively induce or prevent the emergence of concepts or behaviors in the generated output. In this paper we introduce Activation Transport (AcT), a general framework to steer activations guided by optimal transport theory that generalizes many previous activation-steering works. AcT is modality-agnostic and provides fine-grained control over the model behavior with negligible computational overhead, while minimally impacting model abilities. We experimentally show the effectiveness and versatility of our approach by addressing key challenges in large language models (LLMs) and text-to-image diffusion models (T2Is). For LLMs, we show that AcT can effectively mitigate toxicity, induce arbitrary concepts, and increase their truthfulness. In T2Is, we show how AcT enables fine-grained style control and concept negation.",
+    "citations": 31
+  },
+  {
+    "title": "Interpretable Steering of Large Language Models with Feature Guided Activation Additions",
+    "year": 2025,
+    "authors": "S. Soo, Chen Guang, Wesley Teng, Chandrasekaran Balaganesh, Guoxian Tan, Yang Ming",
+    "url": "https://api.semanticscholar.org/CorpusId:275606633",
+    "relevance": 3,
+    "abstract": "Effective and reliable control over large language model (LLM) behavior is a significant challenge. While activation steering methods, which add steering vectors to a model's hidden states, are a promising approach, existing techniques often lack precision and interpretability in how they influence model outputs. We introduce Feature Guided Activation Additions (FGAA), a novel activation steering method that leverages insights from Contrastive Activation Addition (CAA) and Sparse Autoencoder-Targeted Steering (SAE-TS). By operating in the latent space of a Sparse Autoencoder (SAE) and employing optimization techniques to select desired SAE features, FGAA constructs precise steering vectors that provide better steering effects while maintaining coherence of steered model outputs. In this regard, evaluations on Gemma-2-2B and Gemma-2-9B models across various steering tasks demonstrate that FGAA outperforms existing steering methods of CAA, SAE decoder steering, and SAE-TS. Our results also highlight important trade-offs between steering scale and general model capabilities that are consistent across all tested steering methods.",
+    "citations": 26
+  },
+  {
+    "title": "Angular Steering: Behavior Control via Rotation in Activation Space",
+    "year": 2025,
+    "authors": "Hieu M. Vu, Tan M. Nguyen",
+    "url": "https://api.semanticscholar.org/CorpusId:282275955",
+    "relevance": 3,
+    "abstract": "Controlling specific behaviors in large language models while preserving their general capabilities is a central challenge for safe and reliable artificial intelligence deployment. Current steering methods, such as vector addition and directional ablation, are constrained within a two-dimensional subspace defined by the activation and feature direction, making them sensitive to chosen parameters and potentially affecting unrelated features due to unintended interactions in activation space. We introduce Angular Steering, a novel and flexible method for behavior modulation that operates by rotating activations within a fixed two-dimensional subspace. By formulating steering as a geometric rotation toward or away from a target behavior direction, Angular Steering provides continuous, fine-grained control over behaviors such as refusal and compliance. We demonstrate this method using refusal steering emotion steering as use cases. Additionally, we propose Adaptive Angular Steering, a selective variant that rotates only activations aligned with the target feature, further enhancing stability and coherence. Angular Steering generalizes existing addition and orthogonalization techniques under a unified geometric rotation framework, simplifying parameter selection and maintaining model stability across a broader range of adjustments. Experiments across multiple model families and sizes show that Angular Steering achieves robust behavioral control while maintaining general language modeling performance, underscoring its flexibility, generalization, and robustness compared to prior approaches. Code and artifacts are available at https://github.com/lone17/angular-steering/.",
+    "citations": 13
+  },
+  {
+    "title": "Emergent World Models and Latent Variable Estimation in Chess-Playing Language Models",
+    "year": 2024,
+    "authors": "Adam Karvonen",
+    "url": "https://www.semanticscholar.org/paper/197a45da6e58d86998b81771a714caa611eae05a",
+    "relevance": 3,
+    "abstract": "Language models have shown unprecedented capabilities, sparking debate over the source of their performance. Is it merely the outcome of learning syntactic patterns and surface level statistics, or do they extract semantics and a world model from the text? Prior work by Li et al. investigated this by training a GPT model on synthetic, randomly generated Othello games and found that the model learned an internal representation of the board state. We extend this work into the more complex domain of chess, training on real games and investigating our model's internal representations using linear probes and contrastive activations. The model is given no a priori knowledge of the game and is solely trained on next character prediction, yet we find evidence of internal representations of board state. We validate these internal representations by using them to make interventions on the model's activations and edit its internal board state. Unlike Li et al's prior synthetic dataset approach, our analysis finds that the model also learns to estimate latent variables like player skill to better predict the next character. We derive a player skill vector and add it to the model, improving the model's win rate by up to 2.6 times.",
+    "citations": 47
+  },
+  {
+    "title": "Steer2Edit: From Activation Steering to Component-Level Editing",
+    "year": 2026,
+    "authors": "Chung-En Sun, Ge Yan, Zimo Wang, Tsui-Wei Weng",
+    "url": "https://api.semanticscholar.org/CorpusId:285462537",
+    "relevance": 3,
+    "abstract": "Steering methods influence Large Language Model behavior by identifying semantic directions in hidden representations, but are typically realized through inference-time activation interventions that apply a fixed, global modification to the model's internal states. While effective, such interventions often induce unfavorable attribute-utility trade-offs under strong control, as they ignore the fact that many behaviors are governed by a small and heterogeneous subset of model components. We propose Steer2Edit, a theoretically grounded, training-free framework that transforms steering vectors from inference-time control signals into diagnostic signals for component-level rank-1 weight editing. Instead of uniformly injecting a steering direction during generation, Steer2Edit selectively redistributes behavioral influence across individual attention heads and MLP neurons, yielding interpretable edits that preserve the standard forward pass and remain compatible with optimized parallel inference. Across safety alignment, hallucination mitigation, and reasoning efficiency, Steer2Edit consistently achieves more favorable attribute-utility trade-offs: at matched downstream performance, it improves safety by up to 17.2%, increases truthfulness by 9.8%, and reduces reasoning length by 12.2% on average. Overall, Steer2Edit provides a principled bridge between representation steering and weight editing by translating steering signals into interpretable, training-free parameter updates. Our code is available at https://github.com/Trustworthy-ML-Lab/Steer2Edit",
+    "citations": 0
+  },
+  {
+    "title": "SteerVLM: Robust Model Control through Lightweight Activation Steering for Vision Language Models",
+    "year": 2025,
+    "authors": "Anushka Sivakumar, Andrew Zhang, Z. Hakim, Chris Thomas",
+    "url": "https://api.semanticscholar.org/CorpusId:282592687",
+    "relevance": 3,
+    "abstract": "This work introduces SteerVLM, a lightweight steering module designed to guide Vision-Language Models (VLMs) towards outputs that better adhere to desired instructions. Our approach learns from the latent embeddings of paired prompts encoding target and converse behaviors to dynamically adjust activations connecting the language modality with image context. This allows for fine-grained, inference-time control over complex output semantics without modifying model weights while preserving performance on off-target tasks. Our steering module requires learning parameters equal to 0.14% of the original VLM's size. Our steering module gains model control through dimension-wise activation modulation and adaptive steering across layers without requiring pre-extracted static vectors or manual tuning of intervention points. Furthermore, we introduce VNIA (Visual Narrative Intent Alignment), a multimodal dataset specifically created to facilitate the development and evaluation of VLM steering techniques. Our method outperforms existing intervention techniques on steering and hallucination mitigation benchmarks for VLMs and proposes a robust solution for multimodal model control through activation engineering.",
+    "citations": 4
+  },
+  {
+    "title": "Decomposing MLP Activations into Interpretable Features via Semi-Nonnegative Matrix Factorization",
+    "year": 2025,
+    "authors": "Or Shafran, Atticus Geiger, Mor Geva",
+    "url": "https://api.semanticscholar.org/CorpusId:279318478",
+    "relevance": 3,
+    "abstract": "A central goal for mechanistic interpretability has been to identify the right units of analysis in large language models (LLMs) that causally explain their outputs. While early work focused on individual neurons, evidence that neurons often encode multiple concepts has motivated a shift toward analyzing directions in activation space. A key question is how to find directions that capture interpretable features in an unsupervised manner. Current methods rely on dictionary learning with sparse autoencoders (SAEs), commonly trained over residual stream activations to learn directions from scratch. However, SAEs often struggle in causal evaluations and lack intrinsic interpretability, as their learning is not explicitly tied to the computations of the model. Here, we tackle these limitations by directly decomposing MLP activations with semi-nonnegative matrix factorization (SNMF), such that the learned features are (a) sparse linear combinations of co-activated neurons, and (b) mapped to their activating inputs, making them directly interpretable. Experiments on Llama 3.1, Gemma 2 and GPT-2 show that SNMF derived features outperform SAEs and a strong supervised baseline (difference-in-means) on causal steering, while aligning with human-interpretable concepts. Further analysis reveals that specific neuron combinations are reused across semantically-related features, exposing a hierarchical structure in the MLP's activation space. Together, these results position SNMF as a simple and effective tool for identifying interpretable features and dissecting concept representations in LLMs.",
+    "citations": 3
+  },
+  {
+    "title": "Linear Representation Transferability Hypothesis: Leveraging Small Models to Steer Large Models",
+    "year": 2025,
+    "authors": "Femi Bello, Anubrata Das, Fanzhi Zeng, Fangcong Yin, Liu Leqi",
+    "url": "https://api.semanticscholar.org/CorpusId:279075344",
+    "relevance": 3,
+    "abstract": "It has been hypothesized that neural networks with similar architectures trained on similar data learn shared representations relevant to the learning task. We build on this idea by extending the conceptual framework where representations learned across models trained on the same data can be expressed as linear combinations of a \\emph{universal} set of basis features. These basis features underlie the learning task itself and remain consistent across models, regardless of scale. From this framework, we propose the \\textbf{Linear Representation Transferability (LRT)} Hypothesis -- that there exists an affine transformation between the representation spaces of different models. To test this hypothesis, we learn affine mappings between the hidden states of models of different sizes and evaluate whether steering vectors -- directions in hidden state space associated with specific model behaviors -- retain their semantic effect when transferred from small to large language models using the learned mappings. We find strong empirical evidence that such affine mappings can preserve steering behaviors. These findings suggest that representations learned by small models can be used to guide the behavior of large models, and that the LRT hypothesis may be a promising direction on understanding representation alignment across model scales.",
+    "citations": 3
+  },
+  {
+    "title": "A Comparative Analysis of Sparse Autoencoder and Activation Difference in Language Model Steering",
+    "year": 2025,
+    "authors": "Jiaqing Xie",
+    "url": "https://api.semanticscholar.org/CorpusId:281725056",
+    "relevance": 3,
+    "abstract": "Sparse autoencoders (SAEs) have recently emerged as a powerful tool for language model steering. Prior work has explored top-k SAE latents for steering, but we observe that many dimensions among the top-k latents capture non-semantic features such as punctuation rather than semantic attributes like instructions. To address this, we propose focusing on a single, most relevant SAE latent (top-1), eliminating redundant features. We further identify a limitation in constant SAE steering, which often produces degenerate outputs such as repetitive single words. To mitigate this, we introduce a token-wise decaying steering strategy, enabling more faithful comparisons with mean activation difference baselines. Empirically, we show that steering an SAE latent associated with reasoning reliably elicits step-by-step mathematical reasoning and enhances inference quality, functionally resembling the effect of appending a guiding token. Our results demonstrate that SAEs outperform mean activation difference methods on mathematical reasoning benchmarks and match their performance on IF-Eval.",
+    "citations": 0
+  },
+  {
+    "title": "Large Language Models Share Representations of Latent Grammatical Concepts Across Typologically Diverse Languages",
+    "year": 2025,
+    "authors": "Jannik Brinkmann, C. Wendler, Christian Bartelt, Aaron Mueller",
+    "url": "https://api.semanticscholar.org/CorpusId:275471184",
+    "relevance": 3,
+    "abstract": "Human bilinguals often use similar brain regions to process multiple languages, depending on when they learned their second language and their proficiency. In large language models (LLMs), how are multiple languages learned and encoded? In this work, we explore the extent to which LLMs share representations of morphsyntactic concepts such as grammatical number, gender, and tense across languages. We train sparse autoencoders on Llama-3-8B and Aya-23-8B, and demonstrate that abstract grammatical concepts are often encoded in feature directions shared across many languages. We use causal interventions to verify the multilingual nature of these representations; specifically, we show that ablating only multilingual features decreases classifier performance to near-chance across languages. We then use these features to precisely modify model behavior in a machine translation task; this demonstrates both the generality and selectivity of these feature's roles in the network. Our findings suggest that even models trained predominantly on English data can develop robust, cross-lingual abstractions of morphosyntactic concepts.",
+    "citations": 31
+  },
+  {
+    "title": "Beyond Linear Steering: Unified Multi-Attribute Control for Language Models",
+    "year": 2025,
+    "authors": "Narmeen Oozeer, Luke Marks, Martian Fazl Barez, Amirali Abdullah, Yuntao Bai, Saurav Kadavath, Sandipan Kundu, Amanda Askell, John Kernion, Andy Jones, Anna Chen, Anna Goldie, Azalia Mirhoseini, C. McKinnon, Jan Betley, Daniel Tan, Niels Warncke, Anna Sztyber-Betley, Xuchan Bao, Mart'in Soto, Nathan Labenz, Tolga Bolukbasi, Kai-Wei Chang, James Y Zou, Venkatesh Saligrama, Adam T Kalai. 2016, Man, Aaron Grattafiori, A. Dubey, Abhinav Jauhri, Abhinav Pandey, Abhishek Kadian, Ahmad Al-Dahle, Aiesha Letman, Akhil Mathur, A. Schelten, Tim Lawson, Lucy Farnik, Conor Houghton, Kenneth Li, Aspen K. Hopkins, David Bau, Fernanda B. Vi\u00e9gas, Hanspeter Pfister",
+    "url": "https://api.semanticscholar.org/CorpusId:279056898",
+    "relevance": 3,
+    "abstract": "Controlling multiple behavioral attributes in large language models (LLMs) at inference time is a challenging problem due to interference between attributes and the limitations of linear steering methods, which assume additive behavior in activation space and require per-attribute tuning. We introduce K-Steering, a unified and flexible approach that trains a single non-linear multi-label classifier on hidden activations and computes intervention directions via gradients at inference time. This avoids linearity assumptions, removes the need for storing and tuning separate attribute vectors, and allows dynamic composition of behaviors without retraining. To evaluate our method, we propose two new benchmarks, ToneBank and DebateMix, targeting compositional behavioral control. Empirical results across 3 model families, validated by both activation-based classifiers and LLM-based judges, demonstrate that K-Steering outperforms strong baselines in accurately steering multiple behaviors.",
+    "citations": 6
+  },
+  {
+    "title": "Identifying and Transferring Reasoning-Critical Neurons: Improving LLM Inference Reliability via Activation Steering",
+    "year": 2026,
+    "authors": "Fang Dong, Zuming Yan, Xuri Ge, Zhiwei Xu, Mengqi Zhang, Xuanang Chen, Ben He, Xin Xin, Zhumin Chen, Ying Zhou",
+    "url": "https://api.semanticscholar.org/CorpusId:285071441",
+    "relevance": 3,
+    "abstract": "Despite the strong reasoning capabilities of recent large language models (LLMs), achieving reliable performance on challenging tasks often requires post-training or computationally expensive sampling strategies, limiting their practical efficiency. In this work, we first show that a small subset of neurons in LLMs exhibits strong predictive correlations with reasoning correctness. Based on this observation, we propose AdaRAS (Adaptive Reasoning Activation Steering), a lightweight test-time framework that improves reasoning reliability by selectively intervening on neuron activations. AdaRAS identifies Reasoning-Critical Neurons (RCNs) via a polarity-aware mean-difference criterion and adaptively steers their activations during inference, enhancing incorrect reasoning traces while avoiding degradation on already-correct cases. Experiments on 10 mathematics and coding benchmarks demonstrate consistent improvements, including over 13% gains on AIME-24 and AIME-25. Moreover, AdaRAS exhibits strong transferability across datasets and scalability to stronger models, outperforming post-training methods without additional training or sampling cost.",
+    "citations": 1
+  },
+  {
+    "title": "The Shape of Beliefs: Geometry, Dynamics, and Interventions along Representation Manifolds of Language Models' Posteriors",
+    "year": 2026,
+    "authors": "Raphael Sarfati, Eric J. Bigelow, Daniel Wurgaft, Jack Merullo, Atticus Geiger, Owen Lewis, Tom McGrath, E. Lubana",
+    "url": "https://api.semanticscholar.org/CorpusId:285270894",
+    "relevance": 3,
+    "abstract": "Large language models (LLMs) represent prompt-conditioned beliefs (posteriors over answers and claims), but we lack a mechanistic account of how these beliefs are encoded in representation space, how they update with new evidence, and how interventions reshape them. We study a controlled setting in which Llama-3.2 generates samples from a normal distribution by implicitly inferring its parameters (mean and standard deviation) given only samples from the distribution in context. We find representations of curved\"belief manifolds\"for these parameters form with sufficient in-context learning and study how the model adapts when the distribution suddenly changes. While standard linear steering often pushes the model off-manifold and induces coupled, out-of-distribution shifts, geometry and field-aware steering better preserves the intended belief family. Our work demonstrates an example of linear field probing (LFP) as a simple approach to tile the data manifold and make interventions that respect the underlying geometry. We conclude that rich structure emerges naturally in LLMs and that purely linear concept representations are often an inadequate abstraction.",
+    "citations": 1
+  },
+  {
+    "title": "Spurious Rewards Paradox: Mechanistically Understanding How RLVR Activates Memorization Shortcuts in LLMs",
+    "year": 2026,
+    "authors": "Lecheng Yan, Ruizhe Li, Guanhua Chen, Qing Li, Jiahui Geng, Wenxi Li, Vincent Wang, Chris Lee",
+    "url": "https://api.semanticscholar.org/CorpusId:284860856",
+    "relevance": 3,
+    "abstract": "Reinforcement Learning with Verifiable Rewards (RLVR) is highly effective for enhancing LLM reasoning, yet recent evidence shows models like Qwen 2.5 achieve significant gains even with spurious or incorrect rewards. We investigate this phenomenon and identify a\"Perplexity Paradox\": spurious RLVR triggers a divergence where answer-token perplexity drops while prompt-side coherence degrades, suggesting the model is bypassing reasoning in favor of memorization. Using Path Patching, Logit Lens, JSD analysis, and Neural Differential Equations, we uncover a hidden Anchor-Adapter circuit that facilitates this shortcut. We localize a Functional Anchor in the middle layers (L18-20) that triggers the retrieval of memorized solutions, followed by Structural Adapters in later layers (L21+) that transform representations to accommodate the shortcut signal. Finally, we demonstrate that scaling specific MLP keys within this circuit allows for bidirectional causal steering-artificially amplifying or suppressing contamination-driven performance. Our results provide a mechanistic roadmap for identifying and mitigating data contamination in RLVR-tuned models. Code is available at https://github.com/idwts/How-RLVR-Activates-Memorization-Shortcuts.",
+    "citations": 1
+  },
+  {
+    "title": "Mechanistic Knobs in LLMs: Retrieving and Steering High-Order Semantic Features via Sparse Autoencoders",
+    "year": 2026,
+    "authors": "Ruikang Zhang, Shuo Wang, Qi Su",
+    "url": "https://api.semanticscholar.org/CorpusId:284513218",
+    "relevance": 3,
+    "abstract": "Recent work in Mechanistic Interpretability (MI) has enabled the identification and intervention of internal features in Large Language Models (LLMs). However, a persistent challenge lies in linking such internal features to the reliable control of complex, behavior-level semantic attributes in language generation. In this paper, we propose a Sparse Autoencoder-based framework for retrieving and steering semantically interpretable internal features associated with high-level linguistic behaviors. Our method employs a contrastive feature retrieval pipeline based on controlled semantic oppositions, combing statistical activation analysis and generation-based validation to distill monosemantic functional features from sparse activation spaces. Using the Big Five personality traits as a case study, we demonstrate that our method enables precise, bidirectional steering of model behavior while maintaining superior stability and performance compared to existing activation steering methods like Contrastive Activation Addition (CAA). We further identify an empirical effect, which we term Functional Faithfulness, whereby intervening on a specific internal feature induces coherent and predictable shifts across multiple linguistic dimensions aligned with the target semantic attribute. Our findings suggest that LLMs internalize deeply integrated representations of high-order concepts, and provide a novel, robust mechanistic path for the regulation of complex AI behaviors.",
+    "citations": 0
+  },
+  {
+    "title": "In-Distribution Steering: Balancing Control and Coherence in Language Model Generation",
+    "year": 2025,
+    "authors": "Arthur Vogels, Benjamin Wong, Y. Choho, A. Blangero, Milan Bhan",
+    "url": "https://api.semanticscholar.org/CorpusId:282102790",
+    "relevance": 3,
+    "abstract": "Activation steering methods control large language model (LLM) behavior by modifying internal activations at inference time. However, most existing activation steering methods rely on a fixed steering strength, leading to either insufficient control or unadapted intervention that degrades text plausibility and coherence. We introduce In-Distribution Steering (IDS), a novel method that adapts steering strength based on the input data distribution in representation space. IDS dynamically adjusts interventions according to how far a given input lies within the distribution, enabling adaptive intervention and generation stability during text generation. Experiments demonstrate that IDS achieves strong accuracy on classification tasks while producing coherent text without collapse, making IDS particularly well suited for real-world applications.",
+    "citations": 3
+  },
+  {
+    "title": "Unveiling the Latent Directions of Reflection in Large Language Models",
+    "year": 2025,
+    "authors": "Fu-Chieh Chang, Yu-Ting Lee, Pei-Yuan Wu",
+    "url": "https://api.semanticscholar.org/CorpusId:280711509",
+    "relevance": 3,
+    "abstract": "Reflection, the ability of large language models (LLMs) to evaluate and revise their own reasoning, has been widely used to improve performance on complex reasoning tasks. Yet, most prior works emphasizes designing reflective prompting strategies or reinforcement learning objectives, leaving the inner mechanisms of reflection underexplored. In this paper, we investigate reflection through the lens of latent directions in model activations. We propose a methodology based on activation steering to characterize how instructions with different reflective intentions: no reflection, intrinsic reflection, and triggered reflection. By constructing steering vectors between these reflection levels, we demonstrate that (1) new reflection-inducing instructions can be systematically identified, (2) reflective behavior can be directly enhanced or suppressed through activation interventions, and (3) suppressing reflection is considerably easier than stimulating it. Experiments on GSM8k-adv and Cruxeval-o-adv with Qwen2.5-3B and Gemma3-4B-IT reveal clear stratification across reflection levels, and steering interventions confirm the controllability of reflection. Our findings highlight both opportunities (e.g., reflection-enhancing defenses) and risks (e.g., adversarial inhibition of reflection in jailbreak attacks). This work opens a path toward mechanistic understanding of reflective reasoning in LLMs.",
+    "citations": 3
+  },
+  {
+    "title": "Small Vectors, Big Effects: A Mechanistic Study of RL-Induced Reasoning via Steering Vectors",
+    "year": 2025,
+    "authors": "Viacheslav Sinii, Nikita Balagansky, Yaroslav Aksenov, Vadim Kurochkin, Daniil Laptev, Gleb Gerasimov, Alexey Gorbatovski, Boris Shaposhnikov, Daniil Gavrilov",
+    "url": "https://api.semanticscholar.org/CorpusId:281203624",
+    "relevance": 3,
+    "abstract": "The mechanisms by which reasoning training reshapes LLMs'internal computations remain unclear. We study lightweight steering vectors inserted into the base model's residual stream and trained with a reinforcement-learning objective. These vectors explain a large portion of full fine-tuning performance increase while preserving the interpretability of small, additive interventions. We find that (i) the last-layer steering vector acts like a token-substitution bias concentrated on the first generated token, consistently boosting tokens such as\"To\"and\"Step\"; (ii) the penultimate-layer vector leaves attention patterns largely intact and instead operates through the MLP and unembedding, preferentially up-weighting process words and structure symbols; and (iii) the steering vectors transfer to other models from the same family. Taken together, these results deepen understanding of how trained steering vectors shape computation and should inform future work in activation engineering and the study of reasoning models.",
+    "citations": 2
+  },
+  {
+    "title": "Toward a Flexible Framework for Linear Representation Hypothesis Using Maximum Likelihood Estimation",
+    "year": 2025,
+    "authors": "Trung Nguyen, Yan Leng",
+    "url": "https://api.semanticscholar.org/CorpusId:276575160",
+    "relevance": 3,
+    "abstract": "Linear representation hypothesis posits that high-level concepts are encoded as linear directions in the representation spaces of LLMs. Park et al. (2024) formalize this notion by unifying multiple interpretations of linear representation, such as 1-dimensional subspace representation and interventions, using a causal inner product. However, their framework relies on single-token counterfactual pairs and cannot handle ambiguous contrasting pairs, limiting its applicability to complex or context-dependent concepts. We introduce a new notion of binary concepts as unit vectors in a canonical representation space, and utilize LLMs' (neural) activation differences along with maximum likelihood estimation (MLE) to compute concept directions (i.e., steering vectors). Our method, Sum of Activation-base Normalized Difference (SAND), formalizes the use of activation differences modeled as samples from a von Mises-Fisher (vMF) distribution, providing a principled approach to derive concept directions. We extend the applicability of Park et al. (2024) by eliminating the dependency on unembedding representations and single-token pairs. Through experiments with LLaMA models across diverse concepts and benchmarks, we demonstrate that our lightweight approach offers greater flexibility, superior performance in activation engineering tasks like monitoring and manipulation.",
+    "citations": 1
+  },
+  {
+    "title": "ARGUS: Defending Against Multimodal Indirect Prompt Injection via Steering Instruction-Following Behavior",
+    "year": 2025,
+    "authors": "Weikai Lu, Ziqian Zeng, Kehuan Zhang, Haoran Li, Huiping Zhuang, Ruidong Wang, Cen Chen, Hao Peng",
+    "url": "https://api.semanticscholar.org/CorpusId:283672118",
+    "relevance": 3,
+    "abstract": "Multimodal Large Language Models (MLLMs) are increasingly vulnerable to multimodal Indirect Prompt Injection (IPI) attacks, which embed malicious instructions in images, videos, or audio to hijack model behavior. Existing defenses, designed primarily for text-only LLMs, are unsuitable for countering these multimodal threats, as they are easily bypassed, modality-dependent, or generalize poorly. Inspired by activation steering researches, we hypothesize that a robust, general defense independent of modality can be achieved by steering the model's behavior in the representation space. Through extensive experiments, we discover that the instruction-following behavior of MLLMs is encoded in a subspace. Steering along directions within this subspace can enforce adherence to user instructions, forming the basis of a defense. However, we also found that a naive defense direction could be coupled with a utility-degrading direction, and excessive intervention strength harms model performance. To address this, we propose ARGUS, which searches for an optimal defense direction within the safety subspace that decouples from the utility degradation direction, further combining adaptive strength steering to achieve a better safety-utility trade-off. ARGUS also introduces lightweight injection detection stage to activate the defense on-demand, and a post-filtering stage to verify defense success. Experimental results show that ARGUS can achieve robust defense against multimodal IPI while maximally preserving the MLLM's utility.",
+    "citations": 1
+  },
+  {
+    "title": "Understanding the Repeat Curse in Large Language Models from a Feature Perspective",
+    "year": 2025,
+    "authors": "Junchi Yao, Shu Yang, Jianhua Xu, Lijie Hu, Mengdi Li, Di Wang",
+    "url": "https://api.semanticscholar.org/CorpusId:277955692",
+    "relevance": 3,
+    "abstract": "Large language models (LLMs) have made remarkable progress in various domains, yet they often suffer from repetitive text generation, a phenomenon we refer to as the\"Repeat Curse\". While previous studies have proposed decoding strategies to mitigate repetition, the underlying mechanism behind this issue remains insufficiently explored. In this work, we investigate the root causes of repetition in LLMs through the lens of mechanistic interpretability. Inspired by recent advances in Sparse Autoencoders (SAEs), which enable monosemantic feature extraction, we propose a novel approach,\"Duplicatus Charm\", to induce and analyze the Repeat Curse. Our method systematically identifies\"Repetition Features\"-the key model activations responsible for generating repetitive outputs. First, we locate the layers most involved in repetition through logit analysis. Next, we extract and stimulate relevant features using SAE-based activation manipulation. To validate our approach, we construct a repetition dataset covering token and paragraph level repetitions and introduce an evaluation pipeline to quantify the influence of identified repetition features. Furthermore, by deactivating these features, we have effectively mitigated the Repeat Curse. The source code of our work is publicly available at: https://github.com/kaustpradalab/repeat-curse-llm",
+    "citations": 28
+  },
+  {
+    "title": "Multi-property Steering of Large Language Models with Dynamic Activation Composition",
+    "year": 2024,
+    "authors": "Daniel Scalena, Gabriele Sarti, Malvina Nissim",
+    "url": "https://www.semanticscholar.org/paper/cdab286b5b28f03aa9dda2b818f30f8a32a809d4",
+    "relevance": 3,
+    "abstract": "Activation steering methods were shown to be effective in conditioning language model generation by additively intervening over models\u2019 intermediate representations. However, the evaluation of these techniques has so far been limited to single conditioning properties and synthetic settings. In this work, we conduct a comprehensive evaluation of various activation steering strategies, highlighting the property-dependent nature of optimal parameters to ensure a robust effect throughout generation. To address this issue, we propose Dynamic Activation Composition, an information-theoretic approach to modulate the steering intensity of one or more properties throughout generation. Our experiments on multi-property steering show that our method successfully maintains high conditioning while minimizing the impact of conditioning on generation fluency.",
+    "citations": 26
+  },
+  {
+    "title": "Trojan Activation Attack: Red-Teaming Large Language Models using Steering Vectors for Safety-Alignment",
+    "year": 2023,
+    "authors": "Haoran Wang, Kai Shu",
+    "url": "https://api.semanticscholar.org/CorpusId:265220823",
+    "relevance": 3,
+    "abstract": "To ensure AI safety, instruction-tuned Large Language Models (LLMs) are specifically trained to ensure alignment, which refers to making models behave in accordance with human intentions. While these models have demonstrated commendable results on various safety benchmarks, the vulnerability of their safety alignment has not been extensively studied. This is particularly troubling given the potential harm that LLMs can inflict. Existing attack methods on LLMs often rely on poisoned training data or the injection of malicious prompts. These approaches compromise the stealthiness and generalizability of the attacks, making them susceptible to detection. Additionally, these models often demand substantial computational resources for implementation, making them less practical for real-world applications. In this work, we study a different attack scenario, called Trojan Activation Attack (TA2), which injects trojan steering vectors into the activation layers of LLMs. These malicious steering vectors can be triggered at inference time to steer the models toward attacker-desired behaviors by manipulating their activations. Our experiment results on four primary alignment tasks show that TA2 is highly effective and adds little or no overhead to attack efficiency. Additionally, we discuss potential countermeasures against such activation attacks.",
+    "citations": 25
+  },
+  {
+    "title": "LUNAR: LLM Unlearning via Neural Activation Redirection",
+    "year": 2025,
+    "authors": "William F. Shen, Xinchi Qiu, Meghdad Kurmanji, Alexandru Iacob, Lorenzo Sani, Yihong Chen, Nicola Cancedda, N. Lane",
+    "url": "https://api.semanticscholar.org/CorpusId:276259498",
+    "relevance": 3,
+    "abstract": "The ability to selectively remove knowledge from LLMs is highly desirable. However, existing methods often struggle with balancing unlearning efficacy and retain model utility, and lack controllability at inference time to emulate base model behavior as if it had never seen the unlearned data. In this paper, we propose LUNAR, a novel unlearning method grounded in the Linear Representation Hypothesis and operates by redirecting the representations of unlearned data to activation regions that expresses its inability to answer. We show that contrastive features are not a prerequisite for effective activation redirection, and LUNAR achieves state-of-the-art unlearning performance and superior controllability. Specifically, LUNAR achieves between 2.9x and 11.7x improvement in the combined unlearning efficacy and model utility score (Deviation Score) across various base models and generates coherent, contextually appropriate responses post-unlearning. Moreover, LUNAR effectively reduces parameter updates to a single down-projection matrix, a novel design that significantly enhances efficiency by 20x and robustness. Finally, we demonstrate that LUNAR is robust to white-box adversarial attacks and versatile in real-world scenarios, including handling sequential unlearning requests.",
+    "citations": 21
+  },
+  {
+    "title": "Gradient Routing: Masking Gradients to Localize Computation in Neural Networks",
+    "year": 2024,
+    "authors": "Alex Cloud, Jacob Goldman-Wetzler, Ev\u017een Wybitul, Joseph Miller, Alexander Matt Turner",
+    "url": "https://api.semanticscholar.org/CorpusId:273186481",
+    "relevance": 3,
+    "abstract": "Neural networks are trained primarily based on their inputs and outputs, without regard for their internal mechanisms. These neglected mechanisms determine properties that are critical for safety, like (i) transparency; (ii) the absence of sensitive information or harmful capabilities; and (iii) reliable generalization of goals beyond the training distribution. To address this shortcoming, we introduce gradient routing, a training method that isolates capabilities to specific subregions of a neural network. Gradient routing applies data-dependent, weighted masks to gradients during backpropagation. These masks are supplied by the user in order to configure which parameters are updated by which data points. We show that gradient routing can be used to (1) learn representations which are partitioned in an interpretable way; (2) enable robust unlearning via ablation of a pre-specified network subregion; and (3) achieve scalable oversight of a reinforcement learner by localizing modules responsible for different behaviors. Throughout, we find that gradient routing localizes capabilities even when applied to a limited, ad-hoc subset of the data. We conclude that the approach holds promise for challenging, real-world applications where quality data are scarce.",
+    "citations": 18
+  },
+  {
+    "title": "Understanding (Un)Reliability of Steering Vectors in Language Models",
+    "year": 2025,
+    "authors": "Joschka Braun, Carsten Eickhoff, David Krueger, Seyed Ali Bahrainian, D. Krasheninnikov",
+    "url": "https://www.semanticscholar.org/paper/4eb8b483f23b6fd648859f7ff2d6b0e8b5bb6db8",
+    "relevance": 3,
+    "abstract": "Steering vectors are a lightweight method to control language model behavior by adding a learned bias to the activations at inference time. Although steering demonstrates promising performance, recent work shows that it can be unreliable or even counterproductive in some cases. This paper studies the influence of prompt types and the geometry of activation differences on steering reliability. First, we find that all seven prompt types used in our experiments produce a net positive steering effect, but exhibit high variance across samples, and often give an effect opposite of the desired one. No prompt type clearly outperforms the others, and yet the steering vectors resulting from the different prompt types often differ directionally (as measured by cosine similarity). Second, we show that higher cosine similarity between training set activation differences predicts more effective steering. Finally, we observe that datasets where positive and negative activations are better separated are more steerable. Our results suggest that vector steering is unreliable when the target behavior is not represented by a coherent direction.",
+    "citations": 11
+  },
+  {
+    "title": "Robustly Improving LLM Fairness in Realistic Settings via Interpretability",
+    "year": 2025,
+    "authors": "Adam Karvonen, Samuel Marks",
+    "url": "https://api.semanticscholar.org/CorpusId:279318319",
+    "relevance": 3,
+    "abstract": "Large language models (LLMs) are increasingly deployed in high-stakes hiring applications, making decisions that directly impact people's careers and livelihoods. While prior studies suggest simple anti-bias prompts can eliminate demographic biases in controlled evaluations, we find these mitigations fail when realistic contextual details are introduced. We address these failures through internal bias mitigation: by identifying and neutralizing sensitive attribute directions within model activations, we achieve robust bias reduction across all tested scenarios. Across leading commercial (GPT-4o, Claude 4 Sonnet, Gemini 2.5 Flash) and open-source models (Gemma-2 27B, Gemma-3, Mistral-24B), we find that adding realistic context such as company names, culture descriptions from public careers pages, and selective hiring constraints (e.g.,``only accept candidates in the top 10\\%\") induces significant racial and gender biases (up to 12\\% differences in interview rates). When these biases emerge, they consistently favor Black over White candidates and female over male candidates across all tested models and scenarios. Moreover, models can infer demographics and become biased from subtle cues like college affiliations, with these biases remaining invisible even when inspecting the model's chain-of-thought reasoning. To address these limitations, our internal bias mitigation identifies race and gender-correlated directions and applies affine concept editing at inference time. Despite using directions from a simple synthetic dataset, the intervention generalizes robustly, consistently reducing bias to very low levels (typically under 1\\%, always below 2.5\\%) while largely maintaining model performance. Our findings suggest that practitioners deploying LLMs for hiring should adopt more realistic evaluation methodologies and consider internal mitigation strategies for equitable outcomes.",
+    "citations": 10
+  },
+  {
+    "title": "Steering Language Model Refusal with Sparse Autoencoders",
+    "year": 2024,
+    "authors": "Kyle O'Brien, D. Majercak, Xavier Fernandes, Richard Edgar, Jingya Chen, Harsha Nori, Dean Carignan, Eric Horvitz, Forough Poursabzi-Sangde",
+    "url": "https://www.semanticscholar.org/paper/10ab44c08b143739abd91879b00eaafbc0a781ec",
+    "relevance": 3,
+    "abstract": "Responsible deployment of language models requires mechanisms for refusing unsafe prompts while preserving model performance. While most approaches modify model weights through additional training, we explore an alternative: steering model activations at inference time via amplifying sparse autoencoder (SAE) features that mediate refusal. This work uncovers a fundamental tension between SAE steering-based safety improvements and general model capabilities. While feature steering successfully improves robustness against both single-turn and challenging multi-turn jailbreak attempts, we discover that this comes at a previously underexplored cost -- systematic degradation of performance across multiple benchmark tasks, even on safe inputs with no apparent connection to refusal behavior. This suggests that features mediating refusal may be more deeply entangled with general language model capabilities than previously understood. Our findings reveal important open questions about the nature of safety-relevant features in language models and the feasibility of isolating them for targeted intervention. While SAE-based steering shows promise as a flexible approach to enhancing language model safety, our results highlight the critical need to understand and address the mechanisms behind these capability tradeoffs before such techniques can be practically deployed.",
+    "citations": 54
+  },
+  {
+    "title": "Language Model Circuits Are Sparse in the Neuron Basis",
+    "year": 2026,
+    "authors": "Aryaman Arora, Zhengxuan Wu, Jacob Steinhardt, Sarah Schwettmann",
+    "url": "https://api.semanticscholar.org/CorpusId:285241493",
+    "relevance": 3,
+    "abstract": "The high-level concepts that a neural network uses to perform computation need not be aligned to individual neurons (Smolensky, 1986). Language model interpretability research has thus turned to techniques such as \\textit{sparse autoencoders} (SAEs) to decompose the neuron basis into more interpretable units of model computation, for tasks such as \\textit{circuit tracing}. However, not all neuron-based representations are uninterpretable. For the first time, we empirically show that \\textbf{MLP neurons are as sparse a feature basis as SAEs}. We use this finding to develop an end-to-end pipeline for circuit tracing on the MLP neuron basis, which locates causal circuitry on a variety of tasks using gradient-based attribution. On a standard subject-verb agreement benchmark (Marks et al., 2025), a circuit of $\\approx 10^2$ MLP neurons is enough to control model behaviour. On the multi-hop city $\\to$ state $\\to$ capital task from Lindsey et al., 2025, we find a circuit in which small sets of neurons encode specific latent reasoning steps (e.g.~`map city to its state'), and can be steered to change the model's output. This work thus advances automated interpretability of language models without additional training costs.",
+    "citations": 1
+  },
+  {
+    "title": "Simple Mechanistic Explanations for Out-Of-Context Reasoning",
+    "year": 2025,
+    "authors": "Atticus Wang, Joshua Engels, Oliver Clive-Griffin, Senthooran Rajamanoharan, Neel Nanda",
+    "url": "https://api.semanticscholar.org/CorpusId:280254253",
+    "relevance": 3,
+    "abstract": "Out-of-context reasoning (OOCR) is a phenomenon in which fine-tuned LLMs exhibit surprisingly deep out-of-distribution generalization. Rather than learning shallow heuristics, they implicitly internalize and act on the consequences of observations scattered throughout the fine-tuning data. In this work, we investigate this phenomenon mechanistically and find that many instances of OOCR in the literature have a simple explanation: the LoRA fine-tuning essentially adds a constant steering vector, steering the model towards a general concept. This improves performance on the fine-tuning task and in many other concept-related domains, causing the surprising generalization. Moreover, we can directly train steering vectors for these tasks from scratch, which also induces OOCR. We find that our results hold even for a task that seems like it must involve conditional behavior (model backdoors); it turns out that unconditionally adding a steering vector is sufficient. Overall, our work presents one explanation of what gets learned during fine-tuning for OOCR tasks, contributing to the key question of why LLMs can reason out of context, an advanced capability that is highly relevant to their safe and reliable deployment.",
+    "citations": 4
+  },
+  {
+    "title": "Control Reinforcement Learning: Interpretable Token-Level Steering of LLMs via Sparse Autoencoder Features",
+    "year": 2026,
+    "authors": "Seonglae Cho, Zekun Wu, Adriano S. Koshiyama",
+    "url": "https://api.semanticscholar.org/CorpusId:285470244",
+    "relevance": 3,
+    "abstract": "Sparse autoencoders (SAEs) decompose language model activations into interpretable features, but existing methods reveal only which features activate, not which change model outputs when amplified. We introduce Control Reinforcement Learning (CRL), which trains a policy to select SAE features for steering at each token, producing interpretable intervention logs: the learned policy identifies features that change model outputs when amplified. Adaptive Feature Masking encourages diverse feature discovery while preserving singlefeature interpretability. The framework yields new analysis capabilities: branch point tracking locates tokens where feature choice determines output correctness; critic trajectory analysis separates policy limitations from value estimation errors; layer-wise comparison reveals syntactic features in early layers and semantic features in later layers. On Gemma 2 2B across MMLU, BBQ, GSM8K, HarmBench, and XSTest, CRL achieves improvements while providing per-token intervention logs. These results establish learned feature steering as a mechanistic interpretability tool that complements static feature analysis with dynamic intervention probes",
+    "citations": 0
+  },
+  {
+    "title": "Narrow Fine-Tuning Erodes Safety Alignment in Vision-Language Agents",
+    "year": 2026,
+    "authors": "I. Gulati, Shivam Raval",
+    "url": "https://api.semanticscholar.org/CorpusId:285787395",
+    "relevance": 3,
+    "abstract": "Lifelong multimodal agents must continuously adapt to new tasks through post-training, but this creates a fundamental tension between acquiring capabilities and preserving safety alignment. We demonstrate that fine-tuning aligned vision-language models on narrow-domain harmful datasets induces severe emergent misalignment that generalizes broadly across unrelated tasks and modalities. Through experiments on Gemma3-4B, we show that misalignment scales monotonically with LoRA rank, and that multimodal evaluation reveals substantially higher misalignment ($70.71 \\pm 1.22$ at $r=128$) than text-only evaluation ($41.19 \\pm 2.51$), suggesting that unimodal safety benchmarks may underestimate alignment degradation in vision-language models. Critically, even 10\\% harmful data in the training mixture induces substantial alignment degradation. Geometric analysis reveals that harmful behaviors occupy a remarkably low-dimensional subspace, with the majority of misalignment information captured in 10 principal components. To mitigate misalignment, we evaluate two strategies: benign narrow fine-tuning and activation-based steering. While both approaches substantially reduce misalignment, neither completely removes the learned harmful behaviors. Our findings highlight the need for robust continual learning frameworks, as current post-training paradigms may not sufficiently preserve alignment in post-deployment settings.",
+    "citations": 0
+  },
+  {
+    "title": "Selective Steering: Norm-Preserving Control Through Discriminative Layer Selection",
+    "year": 2026,
+    "authors": "Quy-Anh Dang, Chris Ngo",
+    "url": "https://api.semanticscholar.org/CorpusId:285070930",
+    "relevance": 3,
+    "abstract": "Despite significant progress in alignment, large language models (LLMs) remain vulnerable to adversarial attacks that elicit harmful behaviors. Activation steering techniques offer a promising inference-time intervention approach, but existing methods suffer from critical limitations: activation addition requires careful coefficient tuning and is sensitive to layer-specific norm variations, while directional ablation provides only binary control. Recent work on Angular Steering introduces continuous control via rotation in a 2D subspace, but its practical implementation violates norm preservation, causing distribution shift and generation collapse, particularly in models below 7B parameters. We propose Selective Steering, which addresses these limitations through two key innovations: (1) a mathematically rigorous norm-preserving rotation formulation that maintains activation distribution integrity, and (2) discriminative layer selection that applies steering only where feature representations exhibit opposite-signed class alignment. Experiments across nine models demonstrate that Selective Steering achieves 5.5x higher attack success rates than prior methods while maintaining zero perplexity violations and approximately 100\\% capability retention on standard benchmarks. Our approach provides a principled, efficient framework for controllable and stable LLM behavior modification. Code: https://github.com/knoveleng/steering",
+    "citations": 0
+  },
+  {
+    "title": "ASA: Training-Free Representation Engineering for Tool-Calling Agents",
+    "year": 2026,
+    "authors": "Youjin Wang, Run Zhou, Rong Fu, Shuai Cao, Hongwei Zeng, Jiaxuan Lu, Sicheng Fan, Jiaqi Zhao, Liangming Pan",
+    "url": "https://www.semanticscholar.org/paper/6fee6fd45ee71cc729002c3b62a0e24a49b4354a",
+    "relevance": 3,
+    "abstract": "Adapting LLM agents to domain-specific tool calling remains notably brittle under evolving interfaces. Prompt and schema engineering is easy to deploy but often fragile under distribution shift and strict parsers, while continual parameter-efficient fine-tuning improves reliability at the cost of training, maintenance, and potential forgetting. We identify a critical Lazy Agent failure mode where tool necessity is nearly perfectly decodable from mid-layer activations, yet the model remains conservative in entering tool mode, revealing a representation-behavior gap. We propose Activation Steering Adapter (ASA), a training-free, inference-time controller that performs a single-shot mid-layer intervention and targets tool domains via a router-conditioned mixture of steering vectors with a probe-guided signed gate to amplify true intent while suppressing spurious triggers. On MTU-Bench with Qwen2.5-1.5B, ASA improves strict tool-use F1 from 0.18 to 0.50 while reducing the false positive rate from 0.15 to 0.05, using only about 20KB of portable assets and no weight updates.",
+    "citations": 0
+  },
+  {
+    "title": "Steering Externalities: Benign Activation Steering Unintentionally Increases Jailbreak Risk for Large Language Models",
+    "year": 2026,
+    "authors": "Chen Xiong, Zhiyuan He, Pin-Yu Chen, Ching-Yun Ko, Tsung-Yi Ho",
+    "url": "https://www.semanticscholar.org/paper/18a13fb280d8e5ae6be1d714dffaae8f960c1a75",
+    "relevance": 3,
+    "abstract": "Activation steering is a practical post-training model alignment technique to enhance the utility of Large Language Models (LLMs). Prior to deploying a model as a service, developers can steer a pre-trained model toward specific behavioral objectives, such as compliance or instruction adherence, without the need for retraining. This process is as simple as adding a steering vector to the model's internal representations. However, this capability unintentionally introduces critical and under-explored safety risks. We identify a phenomenon termed Steering Externalities, where steering vectors derived from entirely benign datasets-such as those enforcing strict compliance or specific output formats like JSON-inadvertently erode safety guardrails. Experiments reveal that these interventions act as a force multiplier, creating new vulnerabilities to jailbreaks and increasing attack success rates to over 80% on standard benchmarks by bypassing the initial safety alignment. Ultimately, our results expose a critical blind spot in deployment: benign activation steering systematically erodes the\"safety margin,\"rendering models more vulnerable to black-box attacks and proving that inference-time utility improvements must be rigorously audited for unintended safety externalities.",
+    "citations": 0
+  },
+  {
+    "title": "Fine-Grained Activation Steering: Steering Less, Achieving More",
+    "year": 2026,
+    "authors": "Zijian Feng, Tianjiao Li, Zixiao Zhu, Hanzhang Zhou, Junlang Qian, Li Zhang, Jia Jim Deryl Chua, L. Mak, Gee Wah Ng, Kezhi Mao",
+    "url": "https://api.semanticscholar.org/CorpusId:285286388",
+    "relevance": 3,
+    "abstract": "Activation steering has emerged as a cost-effective paradigm for modifying large language model (LLM) behaviors. Existing methods typically intervene at the block level, steering the bundled activations of selected attention heads, feedforward networks, or residual streams. However, we reveal that block-level activations are inherently heterogeneous, entangling beneficial, irrelevant, and harmful features, thereby rendering block-level steering coarse, inefficient, and intrusive. To investigate the root cause, we decompose block activations into fine-grained atomic unit (AU)-level activations, where each AU-level activation corresponds to a single dimension of the block activation, and each AU denotes a slice of the block weight matrix. Steering an AU-level activation is thus equivalent to steering its associated AU. Our theoretical and empirical analysis show that heterogeneity arises because different AUs or dimensions control distinct token distributions in LLM outputs. Hence, block-level steering inevitably moves helpful and harmful token directions together, which reduces efficiency. Restricting intervention to beneficial AUs yields more precise and effective steering. Building on this insight, we propose AUSteer, a simple and efficient method that operates at a finer granularity of the AU level. AUSteer first identifies discriminative AUs globally by computing activation momenta on contrastive samples. It then assigns adaptive steering strengths tailored to diverse inputs and selected AU activations. Comprehensive experiments on multiple LLMs and tasks show that AUSteer consistently surpasses advanced baselines while steering considerably fewer activations, demonstrating that steering less achieves more.",
+    "citations": 0
+  },
+  {
+    "title": "YaPO: Learnable Sparse Activation Steering Vectors for Domain Adaptation",
+    "year": 2026,
+    "authors": "Abdelaziz Bounhar, Rania Elbadry, Hadi Abdine, Preslav Nakov, M. Vazirgiannis, Guokan Shang",
+    "url": "https://api.semanticscholar.org/CorpusId:284704756",
+    "relevance": 3,
+    "abstract": "Steering Large Language Models (LLMs) through activation interventions has emerged as a lightweight alternative to fine-tuning for alignment and personalization. Recent work on Bi-directional Preference Optimization (BiPO) shows that dense steering vectors can be learned directly from preference data in a Direct Preference Optimization (DPO) fashion, enabling control over truthfulness, hallucinations, and safety behaviors. However, dense steering vectors often entangle multiple latent factors due to neuron multi-semanticity, limiting their effectiveness and stability in fine-grained settings such as cultural alignment, where closely related values and behaviors (e.g., among Middle Eastern cultures) must be distinguished. In this paper, we propose Yet another Policy Optimization (YaPO), a \\textit{reference-free} method that learns \\textit{sparse steering vectors} in the latent space of a Sparse Autoencoder (SAE). By optimizing sparse codes, YaPO produces disentangled, interpretable, and efficient steering directions. Empirically, we show that YaPO converges faster, achieves stronger performance, and exhibits improved training stability compared to dense steering baselines. Beyond cultural alignment, YaPO generalizes to a range of alignment-related behaviors, including hallucination, wealth-seeking, jailbreak, and power-seeking. Importantly, YaPO preserves general knowledge, with no measurable degradation on MMLU. Overall, our results show that YaPO provides a general recipe for efficient, stable, and fine-grained alignment of LLMs, with broad applications to controllability and domain adaptation. The associated code and data are publicly available\\footnote{https://github.com/MBZUAI-Paris/YaPO}.",
+    "citations": 0
+  },
+  {
+    "title": "A Concise Agent is Less Expert: Revealing Side Effects of Using Style Features on Conversational Agents",
+    "year": 2026,
+    "authors": "Y. Cho, Yuan Yuan, S. Guntuku, Lyle Ungar",
+    "url": "https://api.semanticscholar.org/CorpusId:284860462",
+    "relevance": 3,
+    "abstract": "Style features such as friendly, helpful, or concise are widely used in prompts to steer the behavior of Large Language Model (LLM) conversational agents, yet their unintended side effects remain poorly understood. In this work, we present the first systematic study of cross-feature stylistic side effects. We conduct a comprehensive survey of 127 conversational agent papers from ACL Anthology and identify 12 frequently used style features. Using controlled, synthetic dialogues across task-oriented and open domain settings, we quantify how prompting for one style feature causally affects others via a pairwise LLM as a Judge evaluation framework. Our results reveal consistent and structured side effects, such as prompting for conciseness significantly reduces perceived expertise. They demonstrate that style features are deeply entangled rather than orthogonal. To support future research, we introduce CASSE (Conversational Agent Stylistic Side Effects), a dataset capturing these complex interactions. We further evaluate prompt based and activation steering based mitigation strategies and find that while they can partially restore suppressed traits, they often degrade the primary intended style. These findings challenge the assumption of faithful style control in LLMs and highlight the need for multi-objective and more principled approaches to safe, targeted stylistic steering in conversational agents.",
+    "citations": 0
+  },
+  {
+    "title": "There Is More to Refusal in Large Language Models than a Single Direction",
+    "year": 2026,
+    "authors": "Faaiz Joad, Majd Hawasly, Sabri Boughorbel, Nadir Durrani, H. Sencar",
+    "url": "https://api.semanticscholar.org/CorpusId:285269665",
+    "relevance": 3,
+    "abstract": "Prior work argues that refusal in large language models is mediated by a single activation-space direction, enabling effective steering and ablation. We show that this account is incomplete. Across eleven categories of refusal and non-compliance, including safety, incomplete or unsupported requests, anthropomorphization, and over-refusal, we find that these refusal behaviors correspond to geometrically distinct directions in activation space. Yet despite this diversity, linear steering along any refusal-related direction produces nearly identical refusal to over-refusal trade-offs, acting as a shared one-dimensional control knob. The primary effect of different directions is not whether the model refuses, but how it refuses.",
+    "citations": 0
+  },
+  {
+    "title": "GSS: Gated Subspace Steering for Selective Memorization Mitigation in LLMs",
+    "year": 2026,
+    "authors": "Xuanqi Zhang, Haoyang Shang, Xiaoxiao Li",
+    "url": "https://api.semanticscholar.org/CorpusId:285453488",
+    "relevance": 3,
+    "abstract": "Large language models (LLMs) can memorize and reproduce training sequences verbatim -- a tendency that undermines both generalization and privacy. Existing mitigation methods apply interventions uniformly, degrading performance on the majority of tokens that generalize normally. We show empirically that memorization is sparse, intermittent, and token-conditioned, suggesting that effective mitigation requires context-aware intervention rather than static parameter modification. To this end, we propose a novel and effective selective memorization mitigation method -- Gated Subspace Steering (GSS), which decomposes intervention into a probe (detecting memorization-relevant activations) and a steer (applying targeted correction only when the probe exceeds a threshold). The optimal probe-steer pair emerges from a principled optimization framework based on optimal subspace steering. Experiments on four benchmarks show GSS matches or exceeds state-of-the-art memorization reduction while requiring $100-1000 \\times$ less compute than optimization-based alternatives. Furthermore, we provide new theoretical insights into the geometry of memorization in neural representations.",
+    "citations": 0
+  },
+  {
+    "title": "LoRA is All You Need for Safety Alignment of Reasoning LLMs",
+    "year": 2025,
+    "authors": "Yihao Xue, Baharan Mirzasoleiman",
+    "url": "https://api.semanticscholar.org/CorpusId:280229489",
+    "relevance": 3,
+    "abstract": "Reasoning-capable LLMs have achieved major breakthroughs in solving complex problems, but recent work shows that acquiring and deploying strong reasoning can introduce significant safety risks. A common mitigation is to apply a secondary safety-alignment phase after reasoning is learned; however, safety alignment often degrades reasoning performance--a phenomenon known as the\"Safety Tax\". In this work, we show that a simple approach can largely bypass this trade-off: applying LoRA during SFT on refusal datasets. Despite its simplicity, this recipe achieves safety comparable to full-model alignment while preserving reasoning performance close to the original reasoning-tuned model, and the result holds across multiple model sizes and architectures, two safety benchmarks, and four reasoning benchmarks spanning mathematics, science, and code generation. We further ablate LoRA configurations and find that (1) rank-1 updates are sufficient to achieve the best safety-reasoning trade-off, (2) applying LoRA only to the MLP up-projection layers can outperform updating the full MLP, and (3) updating middle layers is more effective than updating early or late layers. Finally, we provide a theoretical analysis that helps understand when and why LoRA works, revealing that overshooting the rank budget (using a larger rank than needed for the finetuning task) induces base-task degradation at a rate inversely proportional to the intrinsic dimensionality of the base task. This suggests LoRA is most effective when the finetuning task is low-rank and the base capability is high-rank.",
+    "citations": 3
+  },
+  {
+    "title": "Resa: Transparent Reasoning Models via SAEs",
+    "year": 2025,
+    "authors": "Shangshang Wang, Julian Asilis, Omer Faruk Akgul, Enes Burak Bilgin, Ollie Liu, Deqing Fu, Willie Neiswanger",
+    "url": "https://api.semanticscholar.org/CorpusId:279305663",
+    "relevance": 3,
+    "abstract": "How cost-effectively can we elicit strong reasoning in language models by leveraging their underlying representations? We answer this question with Resa, a family of 1.5B reasoning models trained via a novel and efficient sparse autoencoder tuning (SAE-Tuning) procedure. This method first trains an SAE to capture reasoning abilities from a source model, and then uses the trained SAE to guide a standard supervised fine-tuning process to elicit such abilities in a target model, all using verified question-answer data without any reasoning traces. Notably, when applied to certain base models before further RL post-training, SAE-Tuning retains>97% of its RL-trained counterpart's reasoning performance while reducing training costs by>2000x to roughly \\$1 and training time by>450x to around 20 minutes. Furthermore, when applied to lightly RL-trained models (e.g., within 1 hour on 2 GPUs), it enables reasoning performance such as 43.33% Pass@1 on AIME24 and 90% Pass@1 on AMC23 for only around \\$1 additional cost. Surprisingly, the reasoning abilities extracted via SAEs are potentially both generalizable and modular. Generality means abilities extracted from one dataset still elevate performance on a larger and overlapping corpus. Modularity means abilities extracted from Qwen or Qwen-Math can be attached to the R1-Distill model at test time, without any retraining, and yield comparable gains. Extensive ablations validate these findings and all artifacts are fully open-sourced.",
+    "citations": 2
+  },
+  {
+    "title": "Steering Conceptual Bias via Transformer Latent-Subspace Activation",
+    "year": 2025,
+    "authors": "Vansh Sharma, Venkat Raman",
+    "url": "https://api.semanticscholar.org/CorpusId:280000603",
+    "relevance": 3,
+    "abstract": "This work examines whether activating latent subspaces in language models (LLMs) can steer scientific code generation toward a specific programming language. Five causal LLMs were first evaluated on scientific coding prompts to quantify their baseline bias among four programming languages. A static neuron-attribution method, perturbing the highest activated MLP weight for a C++ or CPP token, proved brittle and exhibited limited generalization across prompt styles and model scales. To address these limitations, a gradient-refined adaptive activation steering framework (G-ACT) was developed: per-prompt activation differences are clustered into a small set of steering directions, and lightweight per-layer probes are trained and refined online to select the appropriate steering vector. In LLaMA-3.2 3B, this approach reliably biases generation towards the CPP language by increasing the average probe classification accuracy by 15% and the early layers (0-6) improving the probe classification accuracy by 61.5% compared to the standard ACT framework. For LLaMA-3.3 70B, where attention-head signals become more diffuse, targeted injections at key layers still improve language selection. Although per-layer probing introduces a modest inference overhead, it remains practical by steering only a subset of layers and enables reproducible model behavior. These results demonstrate a scalable, interpretable and efficient mechanism for concept-level control for practical agentic systems.",
+    "citations": 1
+  },
+  {
+    "title": "Scaling laws for activation steering with Llama 2 models and refusal mechanisms",
+    "year": 2025,
+    "authors": "Sheikh Abdur Raheem Ali, Justin Xu, Ivory Yang, Jasmine Li, A. Arslan, Clark Benham",
+    "url": "https://api.semanticscholar.org/CorpusId:280252579",
+    "relevance": 3,
+    "abstract": "As large language models (LLMs) evolve in complexity and capability, the efficacy of less widely deployed alignment techniques are uncertain. Building on previous work on activation steering and contrastive activation addition (CAA), this paper explores the effectiveness of CAA with model scale using the family of Llama 2 models (7B, 13B, and 70B). CAA works by finding desirable'directions'in the model's residual stream vector space using contrastive pairs (for example, hate to love) and adding this direction to the residual stream during the forward pass. It directly manipulates the residual stream and aims to extract features from language models to better control their outputs. Using answer matching questions centered around the refusal behavior, we found that 1) CAA is most effective when applied at early-mid layers. 2) The effectiveness of CAA diminishes with model size. 3) Negative steering has more pronounced effects than positive steering across all model sizes.",
+    "citations": 1
+  },
+  {
+    "title": "DSO: Direct Steering Optimization for Bias Mitigation",
+    "year": 2025,
+    "authors": "Lucas Monteiro Paes, N. Sivakumar, Yinong Oliver Wang, Masha Fedzechkina Donaldson, B. Theobald, L. Zappella, N. Apostoloff",
+    "url": "https://api.semanticscholar.org/CorpusId:283934447",
+    "relevance": 3,
+    "abstract": "Generative models are often deployed to make decisions on behalf of users, such as vision-language models (VLMs) identifying which person in a room is a doctor to help visually impaired individuals. Yet, VLM decisions are influenced by the perceived demographic attributes of people in the input, which can lead to biased outcomes like failing to identify women as doctors. Moreover, when reducing bias leads to performance loss, users may have varying needs for balancing bias mitigation with overall model capabilities, highlighting the demand for methods that enable controllable bias reduction during inference. Activation steering is a popular approach for inference-time controllability that has shown potential in inducing safer behavior in large language models (LLMs). However, we observe that current steering methods struggle to correct biases, where equiprobable outcomes across demographic groups are required. To address this, we propose Direct Steering Optimization (DSO) which uses reinforcement learning to find linear transformations for steering activations, tailored to mitigate bias while maintaining control over model performance. We demonstrate that DSO achieves state-of-the-art trade-off between fairness and capabilities on both VLMs and LLMs, while offering practitioners inference-time control over the trade-off. Overall, our work highlights the benefit of designing steering strategies that are directly optimized to control model behavior, providing more effective bias intervention than methods that rely on pre-defined heuristics for controllability.",
+    "citations": 0
+  },
+  {
+    "title": "Steering Information Utility in Key-Value Memory for Language Model Post-Training",
+    "year": 2025,
+    "authors": "Chunyuan Deng, Ruidi Chang, Hanjie Chen",
+    "url": "https://www.semanticscholar.org/paper/14d64633e2b20bb0d730e9ca30e6c884c05a3ca2",
+    "relevance": 3,
+    "abstract": "Recent advancements in language models (LMs) have marked a shift toward the growing importance of post-training. Yet, post-training approaches such as supervised fine-tuning (SFT) do not guarantee the effective use of knowledge acquired during pretraining. We therefore introduce InfoSteer, a lightweight method that encourages parametric information utilization in LMs during post-training. Specifically, InfoSteer treats the feed-forward network (FFN) layer as associate key-value memory and promotes the use of stored memory vectors via forward-pass interventions or regularization during backpropagation. This simple guidance during post-training phase yields consistent performance improvements across diverse model families--including Qwen, Gemma and Llama -- spanning 15 downstream tasks in both in-distribution (ID) and out-of-distribution (OOD) evaluations. Beyond performance gains, we also find that steered LMs can adaptively allocate information by placing more emphasis on generating semantically meaningful tokens, while using fewer resources on simple transition ones (e.g., `\\texttt{,}'or `\\texttt{and}'). Our work underscores that vanilla post-training does not fully exploit the potential gained during pre-training, and that steering LMs in latent representation space offers a promising approach to enhance both performance and interpretability. The code is available at: https://github.com/chili-lab/InfoSteer.",
+    "citations": 0
+  },
+  {
+    "title": "Enhancing Instruction-Following Capabilities in Seq2Seq Models: DoLA Adaptations for T5",
+    "year": 2025,
+    "authors": "Huey Sun, Anabel Yong, Lorenzo Gilly, Felipe Jin",
+    "url": "https://api.semanticscholar.org/CorpusId:283466448",
+    "relevance": 3,
+    "abstract": "Encoder-decoder models such as FLAN-T5 are finetuned to follow instructions, but often fail when the instructions conflict with memorized continuations ingrained during training. To understand this behavior, we adapt DoLa to FLAN-T5 and examine how representations evolve in the decoder. Our findings show that T5's intermediate layers undergo rapid shifts driven by cross-attention to the encoder. When projected through the language modeling head, each depth presents highly volatile token preferences, leading to unreliable behavior with contrastive decoding. Motivated by this, we introduce a gradient-based activation-steering method that injects an\"instruction-compliance\"direction into mid-decoder layers, where the representation is both meaningful and still malleable. This intervention dramatically improves MemoTrap performance (52% to 99.7%), demonstrating that mechanistic steering can succeed where contrastive decoding fails in Seq2Seq architectures.",
+    "citations": 0
+  },
+  {
+    "title": "SDialog: A Python Toolkit for End-to-End Agent Building, User Simulation, Dialog Generation, and Evaluation",
+    "year": 2025,
+    "authors": "Sergio Gast\u00f3n Burdisso, Esa\u00fa Villatoro-Tello, Petr Motl\u00edcek",
+    "url": "https://api.semanticscholar.org/CorpusId:279318887",
+    "relevance": 3,
+    "abstract": "We present SDialog, an MIT-licensed open-source Python toolkit that unifies dialog generation, evaluation and mechanistic interpretability into a single end-to-end framework for building and analyzing LLM-based conversational agents. Built around a standardized Dialog representation, SDialog provides: (1) persona-driven multi-agent simulation with composable orchestration for controlled, synthetic dialog generation, (2) comprehensive evaluation combining linguistic metrics, LLM-as-a-judge and functional correctness validators, (3) mechanistic interpretability tools for activation inspection and steering via feature ablation and induction, and (4) audio generation with full acoustic simulation including 3D room modeling and microphone effects. The toolkit integrates with all major LLM backends, enabling mixed-backend experiments under a unified API. By coupling generation, evaluation, and interpretability in a dialog-centric architecture, SDialog enables researchers to build, benchmark and understand conversational systems more systematically.",
+    "citations": 0
+  },
+  {
+    "title": "Language Steering for Multilingual In-Context Learning",
+    "year": 2026,
+    "authors": "Neeraja Kirtane, Kuan-Hao Huang",
+    "url": "https://www.semanticscholar.org/paper/ee7822650d83f3ef8cb0613d54fcf1aa126eb678",
+    "relevance": 3,
+    "abstract": "While multilingual large language models have gained widespread adoption, their performance on non-English languages remains substantially inferior to English. This disparity is particularly evident in in-context learning scenarios, where providing demonstrations in English but testing on non-English inputs leads to significant performance degradation. In this paper, we hypothesize that LLMs develop a universal semantic space for understanding languages, where different languages are encoded as distinct directions within this space. Based on this hypothesis, we propose language vectors -- a training-free language steering approach that leverages activation differences between source and target languages to guide model behavior. We steer the model generations by adding the vector to the intermediate model activations during inference. This is done to make the model's internal representations shift towards the target language space without any parameter updates. We evaluate our method across three datasets and test on a total of 19 languages on three different models. Our results show consistent improvements on multilingual in-context learning over baselines across all tasks and languages tested. Beyond performance gains, hierarchical clustering of steering vectors reveals meaningful linguistic structure aligned with language families. These vectors also successfully transfer across tasks, demonstrating that these representations are task-agnostic.",
+    "citations": 0
+  },
+  {
+    "title": "Linear Personality Probing and Steering in LLMs: A Big Five Study",
+    "year": 2025,
+    "authors": "Michel Frising, Daniel Balcells",
+    "url": "https://www.semanticscholar.org/paper/003976404fb4feee5248c9ea45066e7a1a9d73d0",
+    "relevance": 3,
+    "abstract": "Large language models (LLMs) exhibit distinct and consistent personalities that greatly impact trust and engagement. While this means that personality frameworks would be highly valuable tools to characterize and control LLMs'behavior, current approaches remain either costly (post-training) or brittle (prompt engineering). Probing and steering via linear directions has recently emerged as a cheap and efficient alternative. In this paper, we investigate whether linear directions aligned with the Big Five personality traits can be used for probing and steering model behavior. Using Llama 3.3 70B, we generate descriptions of 406 fictional characters and their Big Five trait scores. We then prompt the model with these descriptions and questions from the Alpaca questionnaire, allowing us to sample hidden activations that vary along personality traits in known, quantifiable ways. Using linear regression, we learn a set of per-layer directions in activation space, and test their effectiveness for probing and steering model behavior. Our results suggest that linear directions aligned with trait-scores are effective probes for personality detection, while their steering capabilities strongly depend on context, producing reliable effects in forced-choice tasks but limited influence in open-ended generation or when additional context is present in the prompt.",
+    "citations": 3
+  },
+  {
+    "title": "LatentGuard: Controllable Latent Steering for Robust Refusal of Attacks and Reliable Response Generation",
+    "year": 2025,
+    "authors": "Huizhen Shu, Xuying Li, Zhuo Li",
+    "url": "https://www.semanticscholar.org/paper/6188816faf2b6bdedd2fad64610ee89c162c1007",
+    "relevance": 3,
+    "abstract": "Achieving robust safety alignment in large language models (LLMs) while preserving their utility remains a fundamental challenge. Existing approaches often struggle to balance comprehensive safety with fine-grained controllability at the representation level. We introduce LATENTGUARD, a novel three-stage framework that combines behavioral alignment with supervised latent space control for interpretable and precise safety steering. Our approach begins by fine-tuning an LLM on rationalized datasets containing both reasoning-enhanced refusal responses to adversarial prompts and reasoning-enhanced normal responses to benign queries, establishing robust behavioral priors across both safety-critical and utility-preserving scenarios. We then train a structured variational autoencoder (VAE) on intermediate MLP activations, supervised by multi-label annotations including attack types, attack methods, and benign indicators. This supervision enables the VAE to learn disentangled latent representations that capture distinct adversarial characteristics while maintaining semantic interpretability. Through targeted manipulation of learned latent dimensions, LATENTGUARD achieves selective refusal behavior, effectively blocking harmful requests while preserving helpfulness for legitimate use cases. Experiments on Qwen3-8B demonstrate significant improvements in both safety controllability and response interpretability without compromising utility. Cross-architecture validation on Mistral-7B confirms the generalizability of our latent steering approach, showing consistent effectiveness across different model families. Our results suggest that structured representation-level intervention offers a promising pathway toward building safer yet practical LLM systems.",
+    "citations": 0
+  },
+  {
+    "title": "Steering Latent Traits, Not Learned Facts: An Empirical Study of Activation Control Limits",
+    "year": 2025,
+    "authors": "Tetiana Bas, Krystian Novak",
+    "url": "https://www.semanticscholar.org/paper/84b25a618bcd42e869bf71d3717da2eae0dca582",
+    "relevance": 3,
+    "abstract": "",
+    "citations": 0
+  },
+  {
+    "title": "Sparse Concept Anchoring for Interpretable and Controllable Neural Representations",
+    "year": 2025,
+    "authors": "S. Fraser, Patryk Wielopolski",
+    "url": "https://www.semanticscholar.org/paper/c4b2c793a350f20ce650e0fe7b1c4aa358ef9948",
+    "relevance": 3,
+    "abstract": "We introduce Sparse Concept Anchoring, a method that biases latent space to position a targeted subset of concepts while allowing others to self-organize, using only minimal supervision (labels for<0.1% of examples per anchored concept). Training combines activation normalization, a separation regularizer, and anchor or subspace regularizers that attract rare labeled examples to predefined directions or axis-aligned subspaces. The anchored geometry enables two practical interventions: reversible behavioral steering that projects out a concept's latent component at inference, and permanent removal via targeted weight ablation of anchored dimensions. Experiments on structured autoencoders show selective attenuation of targeted concepts with negligible impact on orthogonal features, and complete elimination with reconstruction error approaching theoretical bounds. Sparse Concept Anchoring therefore provides a practical pathway to interpretable, steerable behavior in learned representations.",
+    "citations": 0
+  },
+  {
+    "title": "Prototype-Based Dynamic Steering for Large Language Models",
+    "year": 2025,
+    "authors": "Ceyhun Efe Kayan, Li Zhang",
+    "url": "https://www.semanticscholar.org/paper/03da20a9879d4d9e401fd1183aabe0579c54fcae",
+    "relevance": 3,
+    "abstract": "Despite impressive breadth, LLMs still rely on explicit reasoning instructions or static, one-fits-all steering methods, leaving a gap for adaptive, instruction-free reasoning amplification. We present Prototype-Based Dynamic Steering (PDS), a test-time method that amplifies large language model (LLM) reasoning without adding or altering instructions. We introduce\"reasoning prototypes\"by clustering activation differences between Chain-of-Thought (CoT) and neutral prompts. At inference, an input's hidden state is projected onto these prototypes to form an instance-specific steering vector. Evaluated on GSM8K, AQuA-RAT, and BIG-Bench tasks, PDS consistently improves accuracy without fine-tuning or prompt engineering. Notably, the gains persist even when CoT is explicitly suppressed to improve cost-efficiency, indicating that the intervention strengthens latent reasoning processes rather than inducing a superficial behavioral shift. These results position dynamic, prototype-guided steering as a lightweight alternative to training-time approaches for enhancing LLM reasoning.",
+    "citations": 0
+  },
+  {
+    "title": "Representation Engineering for Large-Language Models: Survey and Research Challenges",
+    "year": 2025,
+    "authors": "Lukasz Bartoszcze, Sarthak Munshi, Bryan Sukidi, J. Yen, Ze Yang, David Williams-King, Linh Le, Kosi Asuzu, Carsten Maple",
+    "url": "https://api.semanticscholar.org/CorpusId:276580063",
+    "relevance": 2,
+    "abstract": "Large-language models are capable of completing a variety of tasks, but remain unpredictable and intractable. Representation engineering seeks to resolve this problem through a new approach utilizing samples of contrasting inputs to detect and edit high-level representations of concepts such as honesty, harmfulness or power-seeking. We formalize the goals and methods of representation engineering to present a cohesive picture of work in this emerging discipline. We compare it with alternative approaches, such as mechanistic interpretability, prompt-engineering and fine-tuning. We outline risks such as performance decrease, compute time increases and steerability issues. We present a clear agenda for future research to build predictable, dynamic, safe and personalizable LLMs.",
+    "citations": 8
+  },
+  {
+    "title": "Steering Protein Language Models",
+    "year": 2025,
+    "authors": "Long-Kai Huang, Rongyi Zhu, Bing He, Jianhua Yao",
+    "url": "https://api.semanticscholar.org/CorpusId:281244447",
+    "relevance": 2,
+    "abstract": "Protein Language Models (PLMs), pre-trained on extensive evolutionary data from natural proteins, have emerged as indispensable tools for protein design. While powerful, PLMs often struggle to produce proteins with precisely specified functionalities or properties due to inherent challenges in controlling their outputs. In this work, we investigate the potential of Activation Steering, a technique originally developed for controlling text generation in Large Language Models (LLMs), to direct PLMs toward generating protein sequences with targeted properties. We propose a simple yet effective method that employs activation editing to steer PLM outputs, and extend this approach to protein optimization through a novel editing site identification module. Through comprehensive experiments on lysozyme-like sequence generation and optimization, we demonstrate that our methods can be seamlessly integrated into both auto-encoding and autoregressive PLMs without requiring additional training. These results highlight a promising direction for precise protein engineering using foundation models.",
+    "citations": 4
+  },
+  {
+    "title": "LLM Unlearning Should Be Form-Independent",
+    "year": 2025,
+    "authors": "Xiaotian Ye, Mengqi Zhang, Shu Wu",
+    "url": "https://api.semanticscholar.org/CorpusId:279250878",
+    "relevance": 2,
+    "abstract": "Large Language Model (LLM) unlearning aims to erase or suppress undesirable knowledge within the model, offering promise for controlling harmful or private information to prevent misuse. However, recent studies highlight its limited efficacy in real-world scenarios, hindering practical adoption. In this study, we identify a pervasive issue underlying many downstream failures: the effectiveness of existing unlearning methods heavily depends on the form of training samples and frequently fails to generalize to alternate expressions of the same knowledge. We formally characterize this problem as Form-Dependent Bias and systematically investigate its specific manifestation patterns across various downstream tasks. To quantify its prevalence and support future research, we introduce ORT, a novel benchmark designed to evaluate the robustness of unlearning methods against variations in knowledge expression. Results reveal that Form-Dependent Bias is both widespread and severe among current techniques. We argue that LLM unlearning should be form-independent to address the endless forms of downstream tasks encountered in real-world security-critical scenarios. Towards this goal, we introduce Rank-one Concept Redirection (ROCR), a novel training-free method, as a promising solution path. ROCR performs unlearning by targeting the invariants in downstream tasks, specifically the activated dangerous concepts. It is capable of modifying model parameters within seconds to redirect the model's perception of a specific unlearning target concept to another harmless concept. Extensive experiments demonstrate that ROCR significantly improves unlearning effectiveness compared to traditional methods while generating highly natural outputs.",
+    "citations": 0
+  }
+]
