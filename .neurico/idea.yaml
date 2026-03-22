@@ -1,0 +1,26 @@
+idea:
+  title: Steering Expanded MLP space
+  domain: machine_learning
+  hypothesis: 'Investigating whether it is possible and potentially easier to steer
+    model behavior by intervening in the intermediate space within MLPs, which is
+    typically much wider than the residual stream, and whether this space is more
+    linear or harder to steer due to MLPs encoding more specific, less universal information
+    than the residual stream.
+
+    '
+  background:
+    description: 'The intermediate space within MLPs is usually much wider than the
+      residual stream (usually 4x). Can we steer there? Is it easier, because more
+      things are linear or harder because specific MLPs are to specific to certain
+      information that aren''t as universal as the residual stream''s geometry?
+
+      '
+  metadata:
+    author: Ari Holtzman
+    source: IdeaHub
+    source_url: https://hypogenic.ai/ideahub/idea/cEB7TiKPBevMvWEPjJpP
+    idea_id: steering_expanded_mlp_space_20260322_122425_86c1e1e6
+    created_at: '2026-03-22T12:24:25.456423'
+    status: submitted
+    github_repo_name: steering-expanded-mlp-claude
+    github_repo_url: https://github.com/Hypogenic-AI/steering-expanded-mlp-claude
